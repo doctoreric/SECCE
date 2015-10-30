@@ -537,7 +537,7 @@ colorAdminApp.controller('dashboardV2Controller', function($scope, $rootScope, $
         gridTextWeight: 'normal',
         gridTextSize: '11px',
         gridLineColor: 'rgba(0,0,0,0.5)',
-        hideHover: 'auto',
+        hideHover: 'auto'
     });
 
     /* Donut Chart
@@ -1273,7 +1273,7 @@ colorAdminApp.controller('formPluginsController', function($scope, $rootScope, $
         startDate: moment().subtract('days', 29),
         endDate: moment(),
         minDate: '01/01/2012',
-        maxDate: '12/31/2018',
+        maxDate: '12/31/2018'
     },
     function (start, end) {
         $('#default-daterange input').val(start.format('MMMM D, YYYY') + ' - ' + end.format('MMMM D, YYYY'));
@@ -2980,12 +2980,14 @@ colorAdminApp.controller('loginV1Controller', function($scope, $rootScope, $stat
 /* -------------------------------
    59.0 CONTROLLER - Login V2
 ------------------------------- */
-colorAdminApp.controller('loginV2Controller', function($scope, $rootScope, $state) {
+colorAdminApp.controller('loginV2Controller',function($scope, $rootScope, $state) {
     $rootScope.setting.layout.pageWithoutHeader = true;
     $rootScope.setting.layout.paceTop = true;
     
-    $scope.submitForm = function(form) {
+    $scope.submitForm = function() {
+
         $state.go('app.dashboard.v2');
+        console.log($scope.nombre);
     };
     
     $('[data-click="change-bg"]').click(function() {

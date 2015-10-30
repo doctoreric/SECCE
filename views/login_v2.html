@@ -20,10 +20,10 @@
         <div class="login-content">
             <form method="POST" class="margin-bottom-0" ng-submit="submitForm(loginForm)" novalidate>
                 <div class="form-group m-b-20">
-                    <input type="text" class="form-control input-lg" placeholder="Usuario" />
+                    <input type="text" class="form-control input-lg" placeholder="Usuario" ng-model="usuarios.usro_nombre"/>
                 </div>
                 <div class="form-group m-b-20">
-                    <input type="text" class="form-control input-lg" placeholder="Contraseña" />
+                    <input type="password" class="form-control input-lg" placeholder="Contraseña" ng-model="usuarios.usro_password" />
                 </div>
                 <div class="checkbox m-b-20">
                     <label>
