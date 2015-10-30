@@ -115,7 +115,7 @@ colorAdminApp.controller('appController', ['$rootScope', '$scope', function($roo
         $rootScope.setting.layout.pageContentFullWidth = false;
         $rootScope.setting.layout.paceTop = false;
         $rootScope.setting.layout.pageLanguageBar = false;
-        $rootScope.setting.layout.pageSidebarTransparent = false;
+        $rootScope.setting.layout.pageSidebarTransparent = true;
         $rootScope.setting.layout.pageWideSidebar = false;
         $rootScope.setting.layout.pageLightSidebar = false;
         $rootScope.setting.layout.pageFooter = false;
@@ -147,9 +147,14 @@ colorAdminApp.controller('appController', ['$rootScope', '$scope', function($roo
 /* -------------------------------
    2.0 CONTROLLER - Sidebar
 ------------------------------- */
-colorAdminApp.controller('sidebarController', function($scope, $rootScope, $state) {
+colorAdminApp.controller('sidebarController', ['$scope','$http' , function($scope ,$http) {
+    $scope.user = "Desconocido";
+    $http.get('http://10.20.20.124/angu/json/usroAll.php').
+        success(function(data) {
+            $scope.usuarios = data;
+        });
     App.initSidebar();
-});
+}]);
 
 
 
