@@ -12,7 +12,8 @@ var colorAdminApp = angular.module('colorAdminApp', [
 ]);
 
 colorAdminApp.config(['$stateProvider', '$urlRouterProvider', function($stateProvider, $urlRouterProvider) {
-    $urlRouterProvider.otherwise('/app/dashboard/v2');
+   // $urlRouterProvider.otherwise('/app/dashboard/v2');
+    $urlRouterProvider.otherwise('/member/login/v2');
 
     $stateProvider
         .state('app', {
