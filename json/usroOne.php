@@ -1,6 +1,8 @@
 <?php
-$usro_nombre = $_POST['nombre'];
-$usro_password = $POST['password'];
+$postdata = file_get_contents("php://input");
+$request = json_decode($postdata);
+$nombre = $request->nombre;
+$pass = $request->password;
 
 $db_name  = 'SECCE';
 $hostname = '127.0.0.1';
@@ -11,8 +13,7 @@ $password = 'Eric0293';
 $dbh = new PDO("mysql:host=$hostname;dbname=$db_name", $username, $password);
 
 // a query get all the records from the users table
-$sql = 'select * from usuarios where usro_nombre = "'.$usro_nombre.'"';
-$
+$sql = 'select * from usuarios where usro_nombre = "'.$nombre.'" and usro_password = "'.$pass.'"';
 
 // use prepared statements, even if not strictly required is good practice
 $stmt = $dbh->prepare( $sql );

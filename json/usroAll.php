@@ -1,5 +1,7 @@
 <?php
-
+$postdata = file_get_contents("php://input");
+$request = json_decode($postdata);
+$nombre = $request->nombre;
 // set up the connection variables
 $db_name  = 'SECCE';
 $hostname = '127.0.0.1';
@@ -10,7 +12,7 @@ $password = 'Eric0293';
 $dbh = new PDO("mysql:host=$hostname;dbname=$db_name", $username, $password);
 
 // a query get all the records from the users table
-$sql = 'SELECT * FROM usuarios';
+$sql = 'SELECT * FROM usuarios where usro_id ='.$nombre;
 
 // use prepared statements, even if not strictly required is good practice
 $stmt = $dbh->prepare( $sql );
