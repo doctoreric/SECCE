@@ -16,19 +16,66 @@ colorAdminApp.config(['$stateProvider', '$urlRouterProvider', function($statePro
     $urlRouterProvider.otherwise('/login');
 
     $stateProvider
-        
+
         .state('user', {
             url: '/:userId',
             templateUrl: 'template/app.html',
             abstract: true
         })
-        .state('user.dashboard', {
-            url: '/dashboard',
-            templateUrl: 'views/index.html',
-            data: { pageTitle: 'Dashboard' },
+        .state('user.usro', {
+            url: '/usro',
+            template: '<div ui-view></div>',
+            abstract: true
+        })
+
+        .state('user.usro.nuevo', {
+            url: '/nuevo',
+            data: { pageTitle: 'Usuario Nuevo' },
+            templateUrl: 'views/usroNuevo.html'
+        })
+        .state('user.usro.editar', {
+            url: '/editar',
+            data: { pageTitle: 'Usuario  Editar' },
+            templateUrl: 'views/usroEditar.html'
+        })
+        .state('user.usro.consultar', {
+            url: '/consultar',
+            data: { pageTitle: 'Usuario Consultar' },
+            templateUrl: 'views/usroConsultar.html'
+        })
+        .state('user.usro.eliminar', {
+            url: '/eliminar',
+            data: { pageTitle: 'Usuario Eliminar' },
+            templateUrl: 'views/usroEliminar.html'
+        })
+        .state('user.usro.general', {
+            url: '/general',
+            data: { pageTitle: 'Usuarios General' },
+            templateUrl: 'views/usroGeneral.html',
             resolve: {
                 service: ['$ocLazyLoad', function($ocLazyLoad) {
                     return $ocLazyLoad.load({
+                        serie: true,
+                        files: [
+                            'assets/plugins/DataTables/media/css/dataTables.bootstrap.min.css',
+                            'assets/plugins/DataTables/extensions/Responsive/css/responsive.bootstrap.min.css',
+                            'assets/plugins/DataTables/media/js/jquery.dataTables.js',
+                            'assets/plugins/DataTables/media/js/dataTables.bootstrap.min.js',
+                            'assets/plugins/DataTables/extensions/Responsive/js/dataTables.responsive.min.js'
+                        ]
+                    });
+                }]
+            }
+        })
+        .state('user.dashboard', {
+            url: '/dashboard',
+            data: { pageTitle: 'Dashboard' },
+            templateUrl: 'views/index.html',
+            resolve: {
+                service: ['$ocLazyLoad', function($ocLazyLoad) {
+                    return $ocLazyLoad.load({
+                        serie: true,
+                        name: 'angles',
                         files: [
                             'assets/plugins/jquery-jvectormap/jquery-jvectormap-1.2.2.css',
                             'assets/plugins/bootstrap-calendar/css/bootstrap_calendar.css',
@@ -39,9 +86,11 @@ colorAdminApp.config(['$stateProvider', '$urlRouterProvider', function($statePro
                             'assets/plugins/jquery-jvectormap/jquery-jvectormap-1.2.2.min.js',
                             'assets/plugins/jquery-jvectormap/jquery-jvectormap-world-merc-en.js',
                             'assets/plugins/bootstrap-calendar/js/bootstrap_calendar.min.js',
-                            'assets/plugins/gritter/js/jquery.gritter.js'
+                            'assets/plugins/gritter/js/jquery.gritter.js',
+                            'assets/plugins/chart-js/chart.js',
+                            'assets/plugins/chart-js/angular/angles.js'
                         ]
-                    });
+                    })
                 }]
             }
         })
@@ -50,6 +99,8 @@ colorAdminApp.config(['$stateProvider', '$urlRouterProvider', function($statePro
             data: { pageTitle: 'Login' },
             templateUrl: 'views/login.html'
         })
+
+
 }]);
 
 colorAdminApp.run(['$rootScope', '$state', 'setting', function($rootScope, $state, setting) {

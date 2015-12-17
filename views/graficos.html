@@ -2,12 +2,13 @@
 <div ng-controller="indexController as chartJs">
     <!-- begin breadcrumb -->
     <ol class="breadcrumb pull-right">
-        <li><a href="#/{{user[1]}}/dashboard">Home</a></li>
-        <li class="active">DashBoard</li>
+        <li><a href="javascript:;">Home</a></li>
+        <li><a href="javascript:;">Chart</a></li>
+        <li class="active">Chart JS</li>
     </ol>
     <!-- end breadcrumb -->
     <!-- begin page-header -->
-    <h1 class="page-header">DashBoard Principal <small>Sistema de Monitoreo SECCE</small></h1>
+    <h1 class="page-header">Chart JS <small>header small text goes here...</small></h1>
     <!-- end page-header -->
     <div class="row">
         <!-- begin col-3 -->
@@ -19,7 +20,7 @@
                 <div class="stats-progress progress">
                     <div class="progress-bar" style="width: 70.1%;"></div>
                 </div>
-                <div class="stats-desc">Contador Completo</div>
+                <div class="stats-desc">Contador Completo de Estufas Creadas</div>
             </div>
         </div>
         <!-- end col-3 -->
@@ -40,25 +41,25 @@
         <div class="col-md-3 col-sm-6">
             <div class="widget widget-stats bg-purple">
                 <div class="stats-icon stats-icon-lg"><i class="fa fa-shopping-cart fa-fw"></i></div>
-                <div class="stats-title">CONSUMO TOTAL</div>
-                <div class="stats-number">{{consumo[0].consumo}} Kcal</div>
+                <div class="stats-title">NEW ORDERS</div>
+                <div class="stats-number">38,900</div>
                 <div class="stats-progress progress">
                     <div class="progress-bar" style="width: 76.3%;"></div>
                 </div>
-                <div class="stats-desc">Por leña tipo  : {{consumo[0].cmbs_tipo}}</div>
+                <div class="stats-desc">Better than last week (76.3%)</div>
             </div>
         </div>
         <!-- end col-3 -->
         <!-- begin col-3 -->
         <div class="col-md-3 col-sm-6">
-            <div class="widget widget-stats bg-black-lighter">
+            <div class="widget widget-stats bg-black">
                 <div class="stats-icon stats-icon-lg"><i class="fa fa-comments fa-fw"></i></div>
-                <div class="stats-title">ESTUFAS EN MANTENCION</div>
-                <div class="stats-number">{{error[0].error}} </div>
+                <div class="stats-title">NEW COMMENTS</div>
+                <div class="stats-number">3,988</div>
                 <div class="stats-progress progress">
                     <div class="progress-bar" style="width: 54.9%;"></div>
                 </div>
-                <div class="stats-desc">Mas Info en Apartado Mantención</div>
+                <div class="stats-desc">Better than last week (54.9%)</div>
             </div>
         </div>
         <!-- end col-3 -->
@@ -66,7 +67,7 @@
     <!-- begin row -->
     <div class="row">
         <div class="col-md-6">
-            <div class="panel panel-inverse bg-black-darker" data-sortable-id="chart-js-1">
+            <div class="panel panel-inverse" data-sortable-id="chart-js-1">
                 <div class="panel-heading">
                     <div class="panel-heading-btn">
                         <a href="javascript:;" class="btn btn-xs btn-icon btn-circle btn-default" data-click="panel-expand"><i class="fa fa-expand"></i></a>
@@ -74,11 +75,12 @@
                         <a href="javascript:;" class="btn btn-xs btn-icon btn-circle btn-warning" data-click="panel-collapse"><i class="fa fa-minus"></i></a>
                         <a href="javascript:;" class="btn btn-xs btn-icon btn-circle btn-danger" data-click="panel-remove"><i class="fa fa-times"></i></a>
                     </div>
-                    <h4 class="panel-title">Emisión de Nox </h4>
+                    <h4 class="panel-title">Line Chart</h4>
                 </div>
                 <div class="panel-body">
                     <p>
-                        Grafico con las 9 estufas mas Contaminantes en gases NOX
+                        A line chart is a way of plotting data points on a line.
+                        Often, it is used to show trend data, and the comparison of two data sets.
                     </p>
                     <div>
                         <canvas chart="Line" options="chartJs.chartOptions" data="chartJs.lineChartData"></canvas>
@@ -86,27 +88,28 @@
                 </div>
             </div>
         </div>
-        <div class="col-md-6">
-            <div class="panel panel-inverse bg-black-darker" data-sortable-id="chart-js-2">
-                <div class="panel-heading">
-                    <div class="panel-heading-btn">
-                        <a href="javascript:;" class="btn btn-xs btn-icon btn-circle btn-default" data-click="panel-expand"><i class="fa fa-expand"></i></a>
-                        <a href="javascript:;" class="btn btn-xs btn-icon btn-circle btn-success" data-click="panel-reload"><i class="fa fa-repeat"></i></a>
-                        <a href="javascript:;" class="btn btn-xs btn-icon btn-circle btn-warning" data-click="panel-collapse"><i class="fa fa-minus"></i></a>
-                        <a href="javascript:;" class="btn btn-xs btn-icon btn-circle btn-danger" data-click="panel-remove"><i class="fa fa-times"></i></a>
+            <div class="col-md-6">
+                <div class="panel panel-inverse bg-black" data-sortable-id="chart-js-2">
+                    <div class="panel-heading">
+                        <div class="panel-heading-btn">
+                            <a href="javascript:;" class="btn btn-xs btn-icon btn-circle btn-default" data-click="panel-expand"><i class="fa fa-expand"></i></a>
+                            <a href="javascript:;" class="btn btn-xs btn-icon btn-circle btn-success" data-click="panel-reload"><i class="fa fa-repeat"></i></a>
+                            <a href="javascript:;" class="btn btn-xs btn-icon btn-circle btn-warning" data-click="panel-collapse"><i class="fa fa-minus"></i></a>
+                            <a href="javascript:;" class="btn btn-xs btn-icon btn-circle btn-danger" data-click="panel-remove"><i class="fa fa-times"></i></a>
+                        </div>
+                        <h4 class="panel-title">Bar Chart</h4>
                     </div>
-                    <h4 class="panel-title">Emisión de CO2</h4>
-                </div>
-                <div class="panel-body">
-                    <p>
-                        Datos Tomados en base al año 2015
-                        De un Total de {{gasessum[0].total}} gramos
-                    </p>
-                    <div>
-                        <canvas chart="Bar" options="chartJs.chartOptions" data="chartJs.barChartData"></canvas>
+                    <div class="panel-body">
+                        <p>
+                            A bar chart is a way of showing data as bars.
+                            It is sometimes used to show trend data, and the comparison of multiple data sets side by side.
+                        </p>
+                        <div>
+                            <canvas chart="Bar" options="chartJs.chartOptions" data="chartJs.barChartData"></canvas>
+                        </div>
                     </div>
                 </div>
             </div>
-        </div>
     </div>
+    <!-- end row -->
 </div>

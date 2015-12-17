@@ -147,7 +147,13 @@ colorAdminApp.controller('rightSidebarController', function($scope, $rootScope, 
 /* -------------------------------
  4.0 CONTROLLER - Header
  ------------------------------- */
-colorAdminApp.controller('headerController', function($scope, $rootScope, $state) {
+colorAdminApp.controller('headerController', function($scope, $http, $rootScope, $state,$location) {
+    $scope.user = $location.url();
+    $scope.user= $scope.user.split('/',2);
+    $http.post('json/usroAll.php',{nombre : $scope.user[1]}).
+        success(function(data) {
+            $scope.usuarios = data;
+        });
 });
 
 
@@ -181,19 +187,7 @@ colorAdminApp.controller('themePanelController', function($scope, $rootScope, $s
 
 
 
-
-
-/* -------------------------------
- 9.0 CONTROLLER - Dashboard v2
- ------------------------------- */
-colorAdminApp.controller('dashboardV2Controller', function($scope, $rootScope, $state) {
-
-    /* Line Chart
-     ------------------------- */
-    var green = '#0D888B';
-    var greenLight = '#00ACAC';
-    var blue = '#3273B1';
-    var blueLight = '#348FE2';
+colorAdminApp.controller('indexController', function($scope, $http, $location,$rootScope, $state) {
     var blackTransparent = 'rgba(0,0,0,0.6)';
     var whiteTransparent = 'rgba(255,255,255,0.4)';
     var month = [];
@@ -209,166 +203,281 @@ colorAdminApp.controller('dashboardV2Controller', function($scope, $rootScope, $
     month[9] = "October";
     month[10] = "November";
     month[11] = "December";
-
-    Morris.Line({
-        element: 'visitors-line-chart',
-        data: [
-            {x: '2014-02-01', y: 60, z: 30},
-            {x: '2014-03-01', y: 70, z: 40},
-            {x: '2014-04-01', y: 40, z: 10},
-            {x: '2014-05-01', y: 100, z: 70},
-            {x: '2014-06-01', y: 40, z: 10},
-            {x: '2014-07-01', y: 80, z: 50},
-            {x: '2014-08-01', y: 70, z: 40}
-        ],
-        xkey: 'x',
-        ykeys: ['y', 'z'],
-        xLabelFormat: function(x) {
-            x = month[x.getMonth()];
-            return x.toString();
-        },
-        labels: ['Page Views', 'Unique Visitors'],
-        lineColors: [green, blue],
-        pointFillColors: [greenLight, blueLight],
-        lineWidth: '2px',
-        pointStrokeColors: [blackTransparent, blackTransparent],
-        resize: true,
-        gridTextFamily: 'Open Sans',
-        gridTextColor: whiteTransparent,
-        gridTextWeight: 'normal',
-        gridTextSize: '11px',
-        gridLineColor: 'rgba(0,0,0,0.5)',
-        hideHover: 'auto'
-    });
-
-    /* Donut Chart
-     ------------------------- */
-    var green = '#00acac';
-    var blue = '#348fe2';
-    Morris.Donut({
-        element: 'visitors-donut-chart',
-        data: [
-            {label: "New Visitors", value: 900},
-            {label: "Return Visitors", value: 1200}
-        ],
-        colors: [green, blue],
-        labelFamily: 'Open Sans',
-        labelColor: 'rgba(255,255,255,0.4)',
-        labelTextSize: '12px',
-        backgroundColor: '#242a30'
-    });
-
-
-    /* Vector Map
-     ------------------------- */
-    map = new jvm.WorldMap({
-        map: 'world_merc_en',
-        scaleColors: ['#e74c3c', '#0071a4'],
-        container: $('#visitors-map'),
-        normalizeFunction: 'linear',
-        hoverOpacity: 0.5,
-        hoverColor: false,
-        markerStyle: {
-            initial: {
-                fill: '#4cabc7',
-                stroke: 'transparent',
-                r: 3
+    $scope.user = $location.url();
+    $scope.user= $scope.user.split('/',2);
+    $http.post('json/usroAll.php',{nombre : $scope.user[1]}).
+        success(function(data) {
+            $scope.usuarios = data;
+        });
+    $http.post('json/estfMoni.php').
+        success(function(data2) {
+            $scope.estufa = data2;
+        });
+    $http.post('json/cmbsGastos.php').
+        success(function(data3) {
+            $scope.combustible = data3;
+        });
+    $http.post('json/cmbsConsum.php').
+        success(function(data4) {
+            $scope.consumo = data4;
+        });
+    $http.post('json/estfError.php').
+        success(function(data5) {
+            $scope.error = data5;
+        });
+    $scope.data10 = [];
+    $http.post('json/gsesOctubre.php').
+        success(function(data6) {
+            var consumo2 = data6;
+            for (i = 0; i < 12; i++) {
+                $scope.agosto = Math.round(consumo2[i].consum);
+                $scope.data10.push($scope.agosto);
             }
-        },
-        regions: [{ attribute: 'fill' }],
-        regionStyle: {
-            initial: {
-                fill: 'rgb(97,109,125)',
-                "fill-opacity": 1,
-                stroke: 'none',
-                "stroke-width": 0.4,
-                "stroke-opacity": 1
-            },
-            hover: { "fill-opacity": 0.8 },
-            selected: { fill: 'yellow' }
-        },
-        series: {
-            regions: [{
-                values: {
-                    IN:'#00acac',
-                    US:'#00acac',
-                    KR:'#00acac'
+        });
+    $http.post('json/gsesSum.php').
+        success(function(data7) {
+            $scope.gasessum = data7;
+        });
+
+    $scope.data11 = [];
+    $http.post('json/gsesNox.php').
+        success(function(data8) {
+            var nox = data8;
+            var ins = 1;
+            for (i = 0; i < 10; i++) {
+                var sum = 0;
+                for(j=0;j<10;j++){
+                    sum = sum + parseFloat(nox[ins].gses_nox);
+
+                    ins++;
                 }
-            }]
-        },
-        focusOn: { x: 0.5, y: 0.5, scale: 2 },
-        backgroundColor: '#2d353c'
-    });
+                $scope.noxP = Math.round(sum / 10);
+                $scope.data11.push($scope.noxP);
 
 
-    /* Calendar
-     ------------------------- */
-    var monthNames = ["January", "February", "March", "April", "May", "June",  "July", "August", "September", "October", "November", "December"];
-    var dayNames = ["S", "M", "T", "W", "T", "F", "S"];
-    var now = new Date(),
-        month = now.getMonth() + 1,
-        year = now.getFullYear();
-    var events = [[
-        '2/' + month + '/' + year,
-        'Popover Title',
-        '#',
-        '#00acac',
-        'Some contents here'
-    ], [
-        '5/' + month + '/' + year,
-        'Tooltip with link',
-        'http://www.seantheme.com/color-admin-v1.3',
-        '#2d353c'
-    ], [
-        '18/' + month + '/' + year,
-        'Popover with HTML Content',
-        '#',
-        '#2d353c',
-        'Some contents here <div class="text-right"><a href="http://www.google.com">view more >>></a></div>'
-    ], [
-        '28/' + month + '/' + year,
-        'Color Admin V1.3 Launched',
-        'http://www.seantheme.com/color-admin-v1.3',
-        '#2d353c',
-    ]];
-    var calendarTarget = $('#schedule-calendar');
-    $(calendarTarget).calendar({
-        months: monthNames,
-        days: dayNames,
-        events: events,
-        popover_options:{
-            placement: 'top',
-            html: true
-        }
-    });
-    $(calendarTarget).find('td.event').each(function() {
-        var backgroundColor = $(this).css('background-color');
-        $(this).removeAttr('style');
-        $(this).find('a').css('background-color', backgroundColor);
-    });
-    $(calendarTarget).find('.icon-arrow-left, .icon-arrow-right').parent().on('click', function() {
-        $(calendarTarget).find('td.event').each(function() {
-            var backgroundColor = $(this).css('background-color');
-            $(this).removeAttr('style');
-            $(this).find('a').css('background-color', backgroundColor);
+            }
         });
-    });
-
-
-    /* Gritter Notification
-     ------------------------- */
-    setTimeout(function() {
-        $.gritter.add({
-            title: 'Welcome back, Admin!',
-            text: 'Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed tempus lacus ut lectus rutrum placerat.',
-            image: 'assets/img/user-14.jpg',
-            sticky: true,
-            time: '',
-            class_name: 'my-sticky-class'
+    $scope.data12 = [];
+    $http.post('json/gsesNoxS.php').
+        success(function(data9) {
+            var noxs = data9;
+            for (i=0;i<10;i++){
+                $scope.data12.push(Math.round(noxs[i].emision));
+                console.log($scope.data11);
+            }
         });
-    }, 1000);
+    // white
+    var white = 'rgba(255,255,255,1.0)';
+    var fillBlack = 'rgba(45, 53, 60, 0.6)';
+    var fillBlackLight = 'rgba(45, 53, 60, 0.2)';
+    var strokeBlack = 'rgba(45, 53, 60, 0.8)';
+    var highlightFillBlack = 'rgba(45, 53, 60, 0.8)';
+    var highlightStrokeBlack = 'rgba(45, 53, 60, 1)';
+
+    // blue
+    var fillBlue = 'rgba(52, 143, 226, 0.6)';
+    var fillBlueLight = 'rgba(52, 143, 226, 0.2)';
+    var strokeBlue = 'rgba(52, 143, 226, 0.8)';
+    var highlightFillBlue = 'rgba(52, 143, 226, 0.8)';
+    var highlightStrokeBlue = 'rgba(52, 143, 226, 1)';
+
+    // grey
+    var fillGrey = 'rgba(182, 194, 201, 0.6)';
+    var fillGreyLight = 'rgba(182, 194, 201, 0.2)';
+    var strokeGrey = 'rgba(182, 194, 201, 0.8)';
+    var highlightFillGrey = 'rgba(182, 194, 201, 0.8)';
+    var highlightStrokeGrey = 'rgba(182, 194, 201, 1)';
+
+    // green
+    var fillGreen = 'rgba(0, 172, 172, 0.6)';
+    var fillGreenLight = 'rgba(0, 172, 172, 0.2)';
+    var strokeGreen = 'rgba(0, 172, 172, 0.8)';
+    var highlightFillGreen = 'rgba(0, 172, 172, 0.8)';
+    var highlightStrokeGreen = 'rgba(0, 172, 172, 1)';
+
+    // purple
+    var fillPurple = 'rgba(114, 124, 182, 0.6)';
+    var fillPurpleLight = 'rgba(114, 124, 182, 0.2)';
+    var strokePurple = 'rgba(114, 124, 182, 0.8)';
+    var highlightFillPurple = 'rgba(114, 124, 182, 0.8)';
+    var highlightStrokePurple = 'rgba(114, 124, 182, 1)';
+
+
+    /* ChartJS Bar Chart
+     ------------------------- */
+    var randomScalingFactor = function() {
+        return Math.round(Math.random()*100)
+    };
+
+    var barChartData = {
+        labels : ['Enero','Febrero','Marzo','Abril','Mayo','Junio','Julio','Agosto','Septiembre','Octubre','Nomviembre','Diciembre'],
+        datasets : [{
+
+            fillColor : fillBlueLight,
+            strokeColor : strokeBlue,
+            highlightFill: highlightFillBlue,
+            highlightStroke: highlightStrokeBlue,
+            data : $scope.data10
+        }]
+    };
+    this.barChartData = barChartData;
+
+
+    /* ChartJS Doughnut Chart
+     ------------------------- */
+    var doughnutChartData = [
+        { value: 300, color: fillGrey, highlight: highlightFillGrey, label: 'Grey' },
+        { value: 50, color: fillGreen, highlight: highlightFillGreen, label: 'Green' },
+        { value: 100, color: fillBlue, highlight: highlightFillBlue, label: 'Blue' },
+        { value: 40, color: fillPurple, highlight: highlightFillPurple, label: 'Purple' },
+        { value: 120, color: fillBlack, highlight: highlightFillBlack, label: 'Black' }
+    ];
+    this.doughnutChartData = doughnutChartData;
+
+
+    /* ChartJS Line Chart
+     ------------------------- */
+    var lineChartData = {
+        labels : ['Prom 1','Prom 2','Prom 3','Prom 4','Prom 5','Prom 6','Prom 7','Prom 8','Prom 9'],
+        datasets : [{
+            label: 'My First dataset',
+            fillColor : fillBlackLight,
+            strokeColor : strokeBlack,
+            pointColor : strokeBlack,
+            pointStrokeColor : white,
+            pointHighlightFill : white,
+            pointHighlightStroke : strokeBlack,
+            data : $scope.data11
+        }, {
+            label: 'My Second dataset',
+            fillColor : 'rgba(52,143,226,0.2)',
+            strokeColor : 'rgba(52,143,226,1)',
+            pointColor : 'rgba(52,143,226,1)',
+            pointStrokeColor : '#fff',
+            pointHighlightFill : '#fff',
+            pointHighlightStroke : 'rgba(52,143,226,1)',
+            data : $scope.data12
+        }]
+    };
+    this.lineChartData = lineChartData;
+
+
+    /* ChartJS Pie Chart
+     ------------------------- */
+    var pieChartData = [
+        { value: 300, color: strokePurple, highlight: highlightStrokePurple, label: 'Purple' },
+        { value: 50, color: strokeBlue, highlight: highlightStrokeBlue, label: 'Blue' },
+        { value: 100, color: strokeGreen, highlight: highlightStrokeGreen, label: 'Green' },
+        { value: 40, color: strokeGrey, highlight: highlightStrokeGrey, label: 'Grey' },
+        { value: 120, color: strokeBlack, highlight: highlightStrokeBlack, label: 'Black' }
+    ];
+    this.pieChartData = pieChartData;
+
+
+    /* ChartJS Polar Chart
+     ------------------------- */
+    var polarChartData = [
+        { value: 300, color: strokePurple, highlight: highlightStrokePurple, label: 'Purple' },
+        { value: 50, color: strokeBlue, highlight: highlightStrokeBlue, label: 'Blue' },
+        { value: 100, color: strokeGreen, highlight: highlightStrokeGreen, label: 'Green' },
+        { value: 40, color: strokeGrey, highlight: highlightStrokeGrey, label: 'Grey' },
+        { value: 120, color: strokeBlack, highlight: highlightStrokeBlack, label: 'Black' }
+    ];
+    this.polarChartData = polarChartData;
+
+
+    /* ChartJS Radar Chart
+     ------------------------- */
+    var radarChartData = {
+        labels: ['Eating', 'Drinking', 'Sleeping', 'Designing', 'Coding', 'Cycling', 'Running'],
+        datasets: [{
+            label: 'My First dataset',
+            fillColor: 'rgba(45,53,60,0.2)',
+            strokeColor: 'rgba(45,53,60,1)',
+            pointColor: 'rgba(45,53,60,1)',
+            pointStrokeColor: '#fff',
+            pointHighlightFill: '#fff',
+            pointHighlightStroke: 'rgba(45,53,60,1)',
+            data: [65,59,90,81,56,55,40]
+        }, {
+            label: 'My Second dataset',
+            fillColor: 'rgba(52,143,226,0.2)',
+            strokeColor: 'rgba(52,143,226,1)',
+            pointColor: 'rgba(52,143,226,1)',
+            pointStrokeColor: '#fff',
+            pointHighlightFill: '#fff',
+            pointHighlightStroke: 'rgba(52,143,226,1)',
+            data: [28,48,40,19,96,27,100]
+        }]
+    };
+    this.radarChartData = radarChartData;
+
+
+    /* ChartJS Chart Options
+     ------------------------- */
+    var chartOptions = {
+        animation: true,
+        animationSteps: 60,
+        animationEasing: 'easeOutQuart',
+        showScale: true,
+        scaleOverride: false,
+        scaleSteps: null,
+        scaleStepWidth: null,
+        scaleStartValue: null,
+        scaleLineColor: 'rgba(0,0,0,.1)',
+        scaleLineWidth: 1,
+        scaleShowLabels: true,
+        scaleLabel: '<%=value%>',
+        scaleIntegersOnly: true,
+        scaleBeginAtZero: false,
+        scaleFontFamily: '"Open Sans", "Helvetica Neue", "Helvetica", "Arial", sans-serif',
+        scaleFontSize: 12,
+        scaleFontStyle: 'normal',
+        scaleFontColor: '#707478',
+        responsive: true,
+        maintainAspectRatio: true,
+        showTooltips: true,
+        customTooltips: false,
+        tooltipEvents: ['mousemove', 'touchstart', 'touchmove'],
+        tooltipFillColor: 'rgba(0,0,0,0.8)',
+        tooltipFontFamily: '"Open Sans", "Helvetica Neue", "Helvetica", "Arial", sans-serif',
+        tooltipFontSize: 12,
+        tooltipFontStyle: 'normal',
+        tooltipFontColor: '#ccc',
+        tooltipTitleFontFamily: '"Open Sans", "Helvetica Neue", "Helvetica", "Arial", sans-serif',
+        tooltipTitleFontSize: 12,
+        tooltipTitleFontStyle: 'bold',
+        tooltipTitleFontColor: '#fff',
+        tooltipYPadding: 10,
+        tooltipXPadding: 10,
+        tooltipCaretSize: 8,
+        tooltipCornerRadius: 3,
+        tooltipXOffset: 10,
+        tooltipTemplate: '<%if (label){%><%=label%>: <%}%><%= value %>',
+        multiTooltipTemplate: '<%= value %>',
+        onAnimationProgress: function(){},
+        onAnimationComplete: function(){}
+    }
+    this.chartOptions = chartOptions;
+
+
 });
 
+
+colorAdminApp.controller('tableManageDefaultController', function($scope,$http,$rootScope, $state) {
+
+    if ($('#data-table').length !== 0) {
+        $('#data-table').DataTable({
+            responsive: true
+        });
+    }
+    $scope.usuarios = [];
+    $http.post('json/usroGeneral.php').
+        success(function(data7) {
+            $scope.usuarios = data7;
+        });
+    console.log($scope.usuarios);
+});
 
 
 
