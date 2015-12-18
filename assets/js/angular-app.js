@@ -31,7 +31,18 @@ colorAdminApp.config(['$stateProvider', '$urlRouterProvider', function($statePro
         .state('user.usro.nuevo', {
             url: '/nuevo',
             data: { pageTitle: 'Usuario Nuevo' },
-            templateUrl: 'views/usroNuevo.html'
+            templateUrl: 'views/usroNuevo.html',
+            resolve: {
+                service: ['$ocLazyLoad', function($ocLazyLoad) {
+                    return $ocLazyLoad.load({
+                        serie: true,
+                        files: [
+                            'assets/plugins/parsley/dist/parsley.js',
+                            'assets/plugins/bootstrap-wizard/js/bwizard.js',
+                        ]
+                    });
+                }]
+            }
         })
         .state('user.usro.editar', {
             url: '/editar',
@@ -52,6 +63,62 @@ colorAdminApp.config(['$stateProvider', '$urlRouterProvider', function($statePro
             url: '/general',
             data: { pageTitle: 'Usuarios General' },
             templateUrl: 'views/usroGeneral.html',
+            resolve: {
+                service: ['$ocLazyLoad', function($ocLazyLoad) {
+                    return $ocLazyLoad.load({
+                        serie: true,
+                        files: [
+                            'assets/plugins/DataTables/media/css/dataTables.bootstrap.min.css',
+                            'assets/plugins/DataTables/extensions/Responsive/css/responsive.bootstrap.min.css',
+                            'assets/plugins/DataTables/media/js/jquery.dataTables.js',
+                            'assets/plugins/DataTables/media/js/dataTables.bootstrap.min.js',
+                            'assets/plugins/DataTables/extensions/Responsive/js/dataTables.responsive.min.js'
+                        ]
+                    });
+                }]
+            }
+        })
+        .state('user.estf', {
+            url: '/estf',
+            template: '<div ui-view></div>',
+            abstract: true
+        })
+
+        .state('user.estf.nuevo', {
+            url: '/nuevo',
+            data: { pageTitle: 'Estufa Nuevo' },
+            templateUrl: 'views/estfNuevo.html',
+            resolve: {
+                service: ['$ocLazyLoad', function($ocLazyLoad) {
+                    return $ocLazyLoad.load({
+                        serie: true,
+                        files: [
+                            'assets/plugins/parsley/dist/parsley.js',
+                            'assets/plugins/bootstrap-wizard/js/bwizard.js',
+                        ]
+                    });
+                }]
+            }
+        })
+        .state('user.estf.editar', {
+            url: '/editar',
+            data: { pageTitle: 'Estufa  Editar' },
+            templateUrl: 'views/estfEditar.html'
+        })
+        .state('user.estf.consultar', {
+            url: '/consultar',
+            data: { pageTitle: 'Estufa Consultar' },
+            templateUrl: 'views/estfConsultar.html'
+        })
+        .state('user.estf.eliminar', {
+            url: '/eliminar',
+            data: { pageTitle: 'Estufa Eliminar' },
+            templateUrl: 'views/estfEliminar.html'
+        })
+        .state('user.estf.general', {
+            url: '/general',
+            data: { pageTitle: 'Estufas General' },
+            templateUrl: 'views/estfGeneral.html',
             resolve: {
                 service: ['$ocLazyLoad', function($ocLazyLoad) {
                     return $ocLazyLoad.load({

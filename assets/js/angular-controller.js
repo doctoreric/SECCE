@@ -463,6 +463,40 @@ colorAdminApp.controller('indexController', function($scope, $http, $location,$r
 
 });
 
+colorAdminApp.controller('formUser', function($scope,$http,$rootScope, $state) {
+    var handleBootstrapWizardsValidation = function() {
+        "use strict";
+        $("#wizard").bwizard({ validating: function (e, ui) {
+            if (ui.index == 0) {
+                // step-1 validation
+                if (false === $('form[name="form-wizard"]').parsley().validate('wizard-step-1')) {
+                    return false;
+                }
+            } else if (ui.index == 1) {
+                // step-2 validation
+                if (false === $('form[name="form-wizard"]').parsley().validate('wizard-step-2')) {
+                    return false;
+                }
+            } else if (ui.index == 2) {
+                // step-3 validation
+                if (false === $('form[name="form-wizard"]').parsley().validate('wizard-step-3')) {
+                    return false;
+                }
+            }
+        }
+        });
+    };
+    var FormWizardValidation = function () {
+        "use strict";
+        return {
+            //main function
+            init: function () {
+                handleBootstrapWizardsValidation();
+            }
+        };
+    }();
+
+});
 
 colorAdminApp.controller('tableManageDefaultController', function($scope,$http,$rootScope, $state) {
 
@@ -478,7 +512,20 @@ colorAdminApp.controller('tableManageDefaultController', function($scope,$http,$
         });
     console.log($scope.usuarios);
 });
+colorAdminApp.controller('tableManageDefaultController2', function($scope,$http,$rootScope, $state) {
 
+    if ($('#data-table').length !== 0) {
+        $('#data-table').DataTable({
+            responsive: true
+        });
+    }
+    $scope.estufa = [];
+    $http.post('json/estfGeneral.php').
+        success(function(data7) {
+            $scope.estufas = data7;
+        });
+    console.log($scope.estufas);
+});
 
 
 /* -------------------------------
