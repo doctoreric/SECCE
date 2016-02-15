@@ -463,6 +463,258 @@ colorAdminApp.controller('indexController', function($scope, $http, $location,$r
 
 });
 
+colorAdminApp.controller('tndaController', function($scope, $http, $location,$rootScope, $state) {
+    var blackTransparent = 'rgba(0,0,0,0.6)';
+    var whiteTransparent = 'rgba(255,255,255,0.4)';
+    var month = [];
+    month[0] = "January";
+    month[1] = "February";
+    month[2] = "March";
+    month[3] = "April";
+    month[4] = "May";
+    month[5] = "Jun";
+    month[6] = "July";
+    month[7] = "August";
+    month[8] = "September";
+    month[9] = "October";
+    month[10] = "November";
+    month[11] = "December";
+    $scope.user = $location.url();
+    $scope.user= $scope.user.split('/',2);
+    $http.post('json/usroAll.php',{nombre : $scope.user[1]}).
+        success(function(data) {
+            $scope.usuarios = data;
+        });
+
+    $scope.data10 = [];
+    $http.post('json/gsesOctubre.php').
+        success(function(data6) {
+            var consumo2 = data6;
+            for (i = 0; i < 12; i++) {
+                $scope.agosto = (consumo2[i].consum);
+                $scope.data10.push($scope.agosto);
+            }
+        });
+    $http.post('json/gsesSum.php').
+        success(function(data7) {
+            $scope.gasessum = data7;
+        });
+
+    $scope.data11 = [];
+    $http.post('json/gsesNox.php').
+        success(function(data8) {
+            var nox = data8;
+            var ins = 1;
+            for (i = 0; i < 10; i++) {
+                var sum = 0;
+                for(j=0;j<10;j++){
+                    sum = sum + parseFloat(nox[ins].gses_nox);
+
+                    ins++;
+                }
+                $scope.noxP = Math.round(sum / 10);
+                $scope.data11.push($scope.noxP);
+
+
+            }
+        });
+    $scope.data12 = [];
+    $http.post('json/tempTend.php').
+        success(function(data9) {
+            var noxs = data9;
+            for (i=0;i<20;i++){
+                $scope.data12.push(noxs[i].temp);
+                console.log($scope.data11);
+            }
+        });
+    // white
+    var white = 'rgba(255,255,255,1.0)';
+    var fillBlack = 'rgba(45, 53, 60, 0.6)';
+    var fillBlackLight = 'rgba(45, 53, 60, 0.2)';
+    var strokeBlack = 'rgba(45, 53, 60, 0.8)';
+    var highlightFillBlack = 'rgba(45, 53, 60, 0.8)';
+    var highlightStrokeBlack = 'rgba(45, 53, 60, 1)';
+
+    // blue
+    var fillBlue = 'rgba(52, 143, 226, 0.6)';
+    var fillBlueLight = 'rgba(52, 143, 226, 0.2)';
+    var strokeBlue = 'rgba(52, 143, 226, 0.8)';
+    var highlightFillBlue = 'rgba(52, 143, 226, 0.8)';
+    var highlightStrokeBlue = 'rgba(52, 143, 226, 1)';
+
+    // grey
+    var fillGrey = 'rgba(182, 194, 201, 0.6)';
+    var fillGreyLight = 'rgba(182, 194, 201, 0.2)';
+    var strokeGrey = 'rgba(182, 194, 201, 0.8)';
+    var highlightFillGrey = 'rgba(182, 194, 201, 0.8)';
+    var highlightStrokeGrey = 'rgba(182, 194, 201, 1)';
+
+    // green
+    var fillGreen = 'rgba(0, 172, 172, 0.6)';
+    var fillGreenLight = 'rgba(0, 172, 172, 0.2)';
+    var strokeGreen = 'rgba(0, 172, 172, 0.8)';
+    var highlightFillGreen = 'rgba(0, 172, 172, 0.8)';
+    var highlightStrokeGreen = 'rgba(0, 172, 172, 1)';
+
+    // purple
+    var fillPurple = 'rgba(114, 124, 182, 0.6)';
+    var fillPurpleLight = 'rgba(114, 124, 182, 0.2)';
+    var strokePurple = 'rgba(114, 124, 182, 0.8)';
+    var highlightFillPurple = 'rgba(114, 124, 182, 0.8)';
+    var highlightStrokePurple = 'rgba(114, 124, 182, 1)';
+
+
+    /* ChartJS Bar Chart
+     ------------------------- */
+    var randomScalingFactor = function() {
+        return Math.round(Math.random()*100)
+    };
+
+    var barChartData = {
+        labels : ['Enero','Febrero','Marzo','Abril','Mayo','Junio','Julio','Agosto','Septiembre','Octubre','Nomviembre','Diciembre'],
+        datasets : [{
+
+            fillColor : fillBlueLight,
+            strokeColor : strokeBlue,
+            highlightFill: highlightFillBlue,
+            highlightStroke: highlightStrokeBlue,
+            data : $scope.data10
+        }]
+    };
+    this.barChartData = barChartData;
+
+
+    /* ChartJS Doughnut Chart
+     ------------------------- */
+    var doughnutChartData = [
+        { value: 300, color: fillGrey, highlight: highlightFillGrey, label: 'Grey' },
+        { value: 50, color: fillGreen, highlight: highlightFillGreen, label: 'Green' },
+        { value: 100, color: fillBlue, highlight: highlightFillBlue, label: 'Blue' },
+        { value: 40, color: fillPurple, highlight: highlightFillPurple, label: 'Purple' },
+        { value: 120, color: fillBlack, highlight: highlightFillBlack, label: 'Black' }
+    ];
+    this.doughnutChartData = doughnutChartData;
+
+
+    /* ChartJS Line Chart
+     ------------------------- */
+    var lineChartData = {
+        labels : ['0',' 1 hr','1.5 hr',' 2 hr',' 2.5 hr',' 3 hr','3.5 hr',' 4 hr',' 4.5 hr',' 5 hr','5.5 hr','6 hr','6.5 hr','7 hr','7.5 hr','8 hr','8.5 hr','9 hr','9.5 hr'],
+        datasets : [ {
+            label: 'captura',
+            fillColor : 'rgba(52,143,226,0.2)',
+            strokeColor : 'rgba(52,143,226,1)',
+            pointColor : 'rgba(52,143,226,1)',
+            pointStrokeColor : '#fff',
+            pointHighlightFill : '#fff',
+            pointHighlightStroke : 'rgba(52,143,226,1)',
+            data : $scope.data12
+        }]
+    };
+    this.lineChartData = lineChartData;
+
+
+    /* ChartJS Pie Chart
+     ------------------------- */
+    var pieChartData = [
+        { value: 300, color: strokePurple, highlight: highlightStrokePurple, label: 'Purple' },
+        { value: 50, color: strokeBlue, highlight: highlightStrokeBlue, label: 'Blue' },
+        { value: 100, color: strokeGreen, highlight: highlightStrokeGreen, label: 'Green' },
+        { value: 40, color: strokeGrey, highlight: highlightStrokeGrey, label: 'Grey' },
+        { value: 120, color: strokeBlack, highlight: highlightStrokeBlack, label: 'Black' }
+    ];
+    this.pieChartData = pieChartData;
+
+
+    /* ChartJS Polar Chart
+     ------------------------- */
+    var polarChartData = [
+        { value: 300, color: strokePurple, highlight: highlightStrokePurple, label: 'Purple' },
+        { value: 50, color: strokeBlue, highlight: highlightStrokeBlue, label: 'Blue' },
+        { value: 100, color: strokeGreen, highlight: highlightStrokeGreen, label: 'Green' },
+        { value: 40, color: strokeGrey, highlight: highlightStrokeGrey, label: 'Grey' },
+        { value: 120, color: strokeBlack, highlight: highlightStrokeBlack, label: 'Black' }
+    ];
+    this.polarChartData = polarChartData;
+
+
+    /* ChartJS Radar Chart
+     ------------------------- */
+    var radarChartData = {
+        labels: ['Eating', 'Drinking', 'Sleeping', 'Designing', 'Coding', 'Cycling', 'Running'],
+        datasets: [{
+            label: 'My First dataset',
+            fillColor: 'rgba(45,53,60,0.2)',
+            strokeColor: 'rgba(45,53,60,1)',
+            pointColor: 'rgba(45,53,60,1)',
+            pointStrokeColor: '#fff',
+            pointHighlightFill: '#fff',
+            pointHighlightStroke: 'rgba(45,53,60,1)',
+            data: [65,59,90,81,56,55,40]
+        }, {
+            label: 'My Second dataset',
+            fillColor: 'rgba(52,143,226,0.2)',
+            strokeColor: 'rgba(52,143,226,1)',
+            pointColor: 'rgba(52,143,226,1)',
+            pointStrokeColor: '#fff',
+            pointHighlightFill: '#fff',
+            pointHighlightStroke: 'rgba(52,143,226,1)',
+            data: [28,48,40,19,96,27,100]
+        }]
+    };
+    this.radarChartData = radarChartData;
+
+
+    /* ChartJS Chart Options
+     ------------------------- */
+    var chartOptions = {
+        animation: true,
+        animationSteps: 60,
+        animationEasing: 'easeOutQuart',
+        showScale: true,
+        scaleOverride: false,
+        scaleSteps: null,
+        scaleStepWidth: null,
+        scaleStartValue: null,
+        scaleLineColor: 'rgba(0,0,0,.1)',
+        scaleLineWidth: 1,
+        scaleShowLabels: true,
+        scaleLabel: '<%=value%>',
+        scaleIntegersOnly: true,
+        scaleBeginAtZero: false,
+        scaleFontFamily: '"Open Sans", "Helvetica Neue", "Helvetica", "Arial", sans-serif',
+        scaleFontSize: 12,
+        scaleFontStyle: 'normal',
+        scaleFontColor: '#707478',
+        responsive: true,
+        maintainAspectRatio: true,
+        showTooltips: true,
+        customTooltips: false,
+        tooltipEvents: ['mousemove', 'touchstart', 'touchmove'],
+        tooltipFillColor: 'rgba(0,0,0,0.8)',
+        tooltipFontFamily: '"Open Sans", "Helvetica Neue", "Helvetica", "Arial", sans-serif',
+        tooltipFontSize: 12,
+        tooltipFontStyle: 'normal',
+        tooltipFontColor: '#ccc',
+        tooltipTitleFontFamily: '"Open Sans", "Helvetica Neue", "Helvetica", "Arial", sans-serif',
+        tooltipTitleFontSize: 12,
+        tooltipTitleFontStyle: 'bold',
+        tooltipTitleFontColor: '#fff',
+        tooltipYPadding: 10,
+        tooltipXPadding: 10,
+        tooltipCaretSize: 8,
+        tooltipCornerRadius: 3,
+        tooltipXOffset: 10,
+        tooltipTemplate: '<%if (label){%><%=label%>: <%}%><%= value %>',
+        multiTooltipTemplate: '<%= value %>',
+        onAnimationProgress: function(){},
+        onAnimationComplete: function(){}
+    }
+    this.chartOptions = chartOptions;
+
+
+});
+
 colorAdminApp.controller('formUser', function($scope,$http,$rootScope, $state) {
     var handleBootstrapWizardsValidation = function() {
         "use strict";

@@ -84,6 +84,8 @@ colorAdminApp.config(['$stateProvider', '$urlRouterProvider', function($statePro
             abstract: true
         })
 
+
+
         .state('user.estf.nuevo', {
             url: '/nuevo',
             data: { pageTitle: 'Estufa Nuevo' },
@@ -166,7 +168,37 @@ colorAdminApp.config(['$stateProvider', '$urlRouterProvider', function($statePro
             data: { pageTitle: 'Login' },
             templateUrl: 'views/login.html'
         })
-
+        .state('user.tnda', {
+            url: '/tnda',
+            template: '<div ui-view></div>',
+            abstract: true
+        })
+        .state('user.tnda.general', {
+            url: '/general',
+            data: { pageTitle: 'Tendencia General' },
+            templateUrl: 'views/tndaGeneral.html',
+            resolve: {
+                service: ['$ocLazyLoad', function($ocLazyLoad) {
+                    return $ocLazyLoad.load({
+                        serie: true,
+                        files: [
+                            'assets/plugins/jquery-jvectormap/jquery-jvectormap-1.2.2.css',
+                            'assets/plugins/bootstrap-calendar/css/bootstrap_calendar.css',
+                            'assets/plugins/gritter/css/jquery.gritter.css',
+                            'assets/plugins/morris/morris.css',
+                            'assets/plugins/morris/raphael.min.js',
+                            'assets/plugins/morris/morris.js',
+                            'assets/plugins/jquery-jvectormap/jquery-jvectormap-1.2.2.min.js',
+                            'assets/plugins/jquery-jvectormap/jquery-jvectormap-world-merc-en.js',
+                            'assets/plugins/bootstrap-calendar/js/bootstrap_calendar.min.js',
+                            'assets/plugins/gritter/js/jquery.gritter.js',
+                            'assets/plugins/chart-js/chart.js',
+                            'assets/plugins/chart-js/angular/angles.js'
+                        ]
+                    });
+                }]
+            }
+        })
 
 }]);
 
