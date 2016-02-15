@@ -715,42 +715,22 @@ colorAdminApp.controller('tndaController', function($scope, $http, $location,$ro
 
 });
 
-colorAdminApp.controller('formUser', function($scope,$http,$rootScope, $state) {
-    var handleBootstrapWizardsValidation = function() {
-        "use strict";
-        $("#wizard").bwizard({ validating: function (e, ui) {
-            if (ui.index == 0) {
-                // step-1 validation
-                if (false === $('form[name="form-wizard"]').parsley().validate('wizard-step-1')) {
-                    return false;
+colorAdminApp.controller('estfNuevaCtrl', function($scope,$http,$rootScope, $location) {
+    $scope.estufa = {};
+    $scope.submitForm = function(form){
+        $http.post('json/estfNew.php',{nombre : $scope.estufa.nombre, modelo : $scope.estufa.modelo, ip : $scope.estufa.ip, mac : $scope.estufa.mac})
+            .success(function(data){
+                if(data==""){
+                    bootbox.alert("Error en la Creacion de la Estufa");
                 }
-            } else if (ui.index == 1) {
-                // step-2 validation
-                if (false === $('form[name="form-wizard"]').parsley().validate('wizard-step-2')) {
-                    return false;
+                else{
+                    bootbox.alert("Estufa Creada Correctamente");
                 }
-            } else if (ui.index == 2) {
-                // step-3 validation
-                if (false === $('form[name="form-wizard"]').parsley().validate('wizard-step-3')) {
-                    return false;
-                }
-            }
-        }
-        });
+            });
     };
-    var FormWizardValidation = function () {
-        "use strict";
-        return {
-            //main function
-            init: function () {
-                handleBootstrapWizardsValidation();
-            }
-        };
-    }();
-
 });
 
-colorAdminApp.controller('tableManageDefaultController', function($scope,$http,$rootScope, $state) {
+colorAdminApp.controller('usroGeneralCtrl', function($scope,$http,$rootScope, $state) {
 
     if ($('#data-table').length !== 0) {
         $('#data-table').DataTable({
@@ -764,7 +744,7 @@ colorAdminApp.controller('tableManageDefaultController', function($scope,$http,$
         });
     console.log($scope.usuarios);
 });
-colorAdminApp.controller('tableManageDefaultController2', function($scope,$http,$rootScope, $state) {
+colorAdminApp.controller('estfGeneralCtrl', function($scope,$http,$rootScope, $state) {
 
     if ($('#data-table').length !== 0) {
         $('#data-table').DataTable({
@@ -778,7 +758,6 @@ colorAdminApp.controller('tableManageDefaultController2', function($scope,$http,
         });
     console.log($scope.estufas);
 });
-
 
 /* -------------------------------
  59.0 CONTROLLER - Login V2
@@ -798,7 +777,7 @@ colorAdminApp.controller('loginV2Controller', function($scope, $rootScope, $loca
                     $scope.id = data;
                     $location.url($scope.id[0].usro_id +  "/dashboard");
                 }
-    });
+        });
     };
 
     $('[data-click="change-bg"]').click(function() {

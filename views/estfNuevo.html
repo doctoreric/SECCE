@@ -1,4 +1,4 @@
-<div ng-controller="formUser">
+<div ng-controller="estfNuevaCtrl">
     <!-- begin breadcrumb -->
     <ol class="breadcrumb pull-right">
         <li><a ui-sref="user.dashboard">Dashboard</a></li>
@@ -37,7 +37,7 @@
                                         <div class="col-md-4">
                                             <div class="form-group block1">
                                                 <label>Nombre Estufa</label>
-                                                <input type="text" name="nombre" placeholder="Calefactor 1" class="form-control" data-parsley-group="wizard-step-1" required />
+                                                <input type="text" name="nombre" placeholder="Calefactor 1" class="form-control" ng-model="estufa.nombre" required />
                                             </div>
                                         </div>
                                         <!-- end col-4 -->
@@ -45,12 +45,9 @@
                                         <div class="col-md-4">
                                             <div class="form-group">
                                                 <label>Modelo</label>
-                                                <input type="text" name="modelo" placeholder="Modelo A" class="form-control" data-parsley-group="wizard-step-1" required />
+                                                <input type="text" name="modelo" placeholder="Modelo A" class="form-control" ng-model="estufa.modelo" required />
                                             </div>
                                         </div>
-                                        <!-- end col-4 -->
-                                        <!-- begin col-4 -->
-
                                         <!-- end col-4 -->
                                     </div>
                                     <!-- end row -->
@@ -60,14 +57,14 @@
                             <!-- begin wizard step-2 -->
                             <div class="wizard-step-2">
                                 <fieldset>
-                                    <legend class="pull-left width-full">Información de Contacto y Ubicacion</legend>
+                                    <legend class="pull-left width-full">Información de Contacto y Ubicación</legend>
                                     <!-- begin row -->
                                     <div class="row">
                                         <!-- begin col-6 -->
                                         <div class="col-md-6">
                                             <div class="form-group">
                                                 <label>Dirección IP</label>
-                                                <input type="text" name="ip" placeholder="192.168.0.1" class="form-control" data-parsley-group="wizard-step-2" data-parsley-type="number" required />
+                                                <input type="text" name="ip" placeholder="192.168.0.1" class="form-control" ng-model="estufa.ip" data-parsley-type="number" required />
                                             </div>
                                         </div>
                                         <!-- end col-6 -->
@@ -75,7 +72,7 @@
                                         <div class="col-md-6">
                                             <div class="form-group">
                                                 <label>Dirección MAC</label>
-                                                <input type="text" name="mac" placeholder="ff:aa:aa:bc:ff" class="form-control" data-parsley-group="wizard-step-2" data-parsley-type="email" required />
+                                                <input type="text" name="mac" placeholder="ff:aa:aa:bc:ff" class="form-control" ng-model="estufa.mac" data-parsley-type="email" required />
                                             </div>
                                         </div>
                                         <!-- end col-6 -->
