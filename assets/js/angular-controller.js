@@ -258,14 +258,37 @@ colorAdminApp.controller('indexController', function($scope, $http, $location,$r
             }
         });
     $scope.data12 = [];
+    $scope.data21 = [];
+    $http.post('json/estfGeneral.php').
+        success(function(data20){
+            var estf = data20;
+            //$scope.data21 = [[estf[0].estf_id,estf[0].estf_nombre,estf[0].estf_modelo,estf[0].estf_ip,estf[0].estf_mac,estf[0].estf_comentarios]];
+           for(j=0;j<100;j++){
+               $scope.data21[j]=[];
+               $scope.data21[j].push(estf[j].estf_id);
+               $scope.data21[j].push(estf[j].estf_nombre);
+               $scope.data21[j].push(estf[j].estf_modelo);
+               $scope.data21[j].push(estf[j].estf_ip);
+               $scope.data21[j].push(estf[j].estf_mac);
+               $scope.data21[j].push(estf[j].estf_comentarios);
+           }
+
+        });
+
+
     $http.post('json/gsesNoxS.php').
         success(function(data9) {
             var noxs = data9;
             for (i=0;i<10;i++){
                 $scope.data12.push(Math.round(noxs[i].emision));
-                console.log($scope.data11);
             }
+            console.log($scope.data21);$('#data-table').DataTable({
+                responsive: true,
+                data : $scope.data21
+            });
         });
+
+
     // white
     var white = 'rgba(255,255,255,1.0)';
     var fillBlack = 'rgba(45, 53, 60, 0.6)';
@@ -742,21 +765,96 @@ colorAdminApp.controller('usroGeneralCtrl', function($scope,$http,$rootScope, $s
         success(function(data7) {
             $scope.usuarios = data7;
         });
-    console.log($scope.usuarios);
 });
-colorAdminApp.controller('estfGeneralCtrl', function($scope,$http,$rootScope, $state) {
+colorAdminApp.controller('estfGeneralCtrl', function($scope,$http,$rootScope, $state,$location) {
+    var blackTransparent = 'rgba(0,0,0,0.6)';
+    var whiteTransparent = 'rgba(255,255,255,0.4)';
+    var month = [];
+    month[0] = "January";
+    month[1] = "February";
+    month[2] = "March";
+    month[3] = "April";
+    month[4] = "May";
+    month[5] = "Jun";
+    month[6] = "July";
+    month[7] = "August";
+    month[8] = "September";
+    month[9] = "October";
+    month[10] = "November";
+    month[11] = "December";
+    $scope.user = $location.url();
+    $scope.user= $scope.user.split('/',2);
+    $http.post('json/usroAll.php',{nombre : $scope.user[1]}).
+        success(function(data) {
+            $scope.usuarios = data;
+        });
 
-    if ($('#data-table').length !== 0) {
-        $('#data-table').DataTable({
-            responsive: true
+
+    $scope.data10 = [];
+    $http.post('json/gsesOctubre.php').
+        success(function(data6) {
+            var consumo2 = data6;
+            for (i = 0; i < 12; i++) {
+                $scope.agosto = Math.round(consumo2[i].consum);
+                $scope.data10.push($scope.agosto);
+            }
         });
-    }
-    $scope.estufa = [];
+
+
+    $scope.data11 = [];
+    $http.post('json/gsesNox.php').
+        success(function(data8) {
+            var nox = data8;
+            var ins = 1;
+            for (i = 0; i < 10; i++) {
+                var sum = 0;
+                for(j=0;j<10;j++){
+                    sum = sum + parseFloat(nox[ins].gses_nox);
+
+                    ins++;
+                }
+                $scope.noxP = Math.round(sum / 10);
+                $scope.data11.push($scope.noxP);
+
+
+            }
+        });
+    $scope.data12 = [];
+    $scope.data21 = [];
     $http.post('json/estfGeneral.php').
-        success(function(data7) {
-            $scope.estufas = data7;
+        success(function(data20){
+            var estf = data20;
+            //$scope.data21 = [[estf[0].estf_id,estf[0].estf_nombre,estf[0].estf_modelo,estf[0].estf_ip,estf[0].estf_mac,estf[0].estf_comentarios]];
+            for(j=0;j<100;j++){
+                $scope.data21[j]=[];
+                $scope.data21[j].push(estf[j].estf_id);
+                $scope.data21[j].push(estf[j].estf_nombre);
+                $scope.data21[j].push(estf[j].estf_modelo);
+                $scope.data21[j].push(estf[j].estf_ip);
+                $scope.data21[j].push(estf[j].estf_mac);
+                $scope.data21[j].push(estf[j].estf_comentarios);
+            }
+
         });
-    console.log($scope.estufas);
+
+
+    $http.post('json/gsesNoxS.php').
+        success(function(data9) {
+            var noxs = data9;
+            for (i=0;i<10;i++){
+                $scope.data12.push(Math.round(noxs[i].emision));
+            }
+            console.log($scope.data21);$('#data-table').DataTable({
+                responsive: true,
+                data : $scope.data21
+            });
+        });
+
+
+
+
+
+
 });
 
 /* -------------------------------

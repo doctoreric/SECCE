@@ -157,6 +157,11 @@ colorAdminApp.config(['$stateProvider', '$urlRouterProvider', function($statePro
                             'assets/plugins/bootstrap-calendar/js/bootstrap_calendar.min.js',
                             'assets/plugins/gritter/js/jquery.gritter.js',
                             'assets/plugins/chart-js/chart.js',
+                            'assets/plugins/DataTables/media/css/dataTables.bootstrap.min.css',
+                            'assets/plugins/DataTables/extensions/Responsive/css/responsive.bootstrap.min.css',
+                            'assets/plugins/DataTables/media/js/jquery.dataTables.js',
+                            'assets/plugins/DataTables/media/js/dataTables.bootstrap.min.js',
+                            'assets/plugins/DataTables/extensions/Responsive/js/dataTables.responsive.min.js',
                             'assets/plugins/chart-js/angular/angles.js'
                         ]
                     })
