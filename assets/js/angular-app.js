@@ -47,7 +47,18 @@ colorAdminApp.config(['$stateProvider', '$urlRouterProvider', function($statePro
         .state('user.usro.editar', {
             url: '/editar',
             data: { pageTitle: 'Usuario  Editar' },
-            templateUrl: 'views/usroEditar.html'
+            templateUrl: 'views/usroEditar.html',
+            resolve: {
+                service: ['$ocLazyLoad', function($ocLazyLoad) {
+                    return $ocLazyLoad.load({
+                        serie: true,
+                        files: [
+                            'assets/plugins/parsley/dist/parsley.js',
+                            'assets/plugins/bootstrap-wizard/js/bwizard.js',
+                        ]
+                    });
+                }]
+            }
         })
         .state('user.usro.consultar', {
             url: '/consultar',
@@ -102,17 +113,22 @@ colorAdminApp.config(['$stateProvider', '$urlRouterProvider', function($statePro
                 }]
             }
         })
-        .state('user.estf.editar', {
+        .state('user.estf.id', {
+            url: '/:estfID',
+            template: '<div ui-view></div>',
+            abstract: true
+        })
+        .state('user.estf.id.editar', {
             url: '/editar',
             data: { pageTitle: 'Estufa  Editar' },
             templateUrl: 'views/estfEditar.html'
         })
-        .state('user.estf.consultar', {
+        .state('user.estf.id.consultar', {
             url: '/consultar',
             data: { pageTitle: 'Estufa Consultar' },
             templateUrl: 'views/estfConsultar.html'
         })
-        .state('user.estf.eliminar', {
+        .state('user.estf.id.eliminar', {
             url: '/eliminar',
             data: { pageTitle: 'Estufa Eliminar' },
             templateUrl: 'views/estfEliminar.html'

@@ -738,8 +738,38 @@ colorAdminApp.controller('tndaController', function($scope, $http, $location,$ro
 
 });
 
+colorAdminApp.controller('estfEditarCtrl', function($scope,$http,$rootScope, $location) {
+    $scope.id = $scope.user = $location.url();
+    $scope.id = $scope.user= $scope.user.split('/',4);
+    $scope.nombre="-";
+    $scope.user = $location.url();
+    $scope.user= $scope.user.split('/',2);
+    $http.post('json/estfOne.php',{id : $scope.id[3]})
+        .success(function(data){
+            var estufa = data;
+            $scope.nombre = estufa[0].estf_nombre;
+            $scope.modelo = estufa[0].estf_modelo;
+            $scope.ip = estufa[0].estf_ip;
+            $scope.mac = estufa[0].estf_mac;
+            $scope.comentarios = estufa[0].estf_comentarios;
+        });
+    $scope.submitForm = function(form){
+        $http.post('json/estfEdit.php',{nombre : $scope.nombre, modelo : $scope.modelo, ip : $scope.ip, mac : $scope.mac, comentarios : $scope.comentarios,id : $scope.id[3]})
+            .success(function(data){
+                if(data==""){
+                    bootbox.alert("Error en la Edicion de la Estufa");
+                }
+                else{
+                    bootbox.alert("Estufa Editada Correctamente");
+                    $location.url($scope.user[1] +  "/estf/general");
+                }
+            });
+    };
+});
 colorAdminApp.controller('estfNuevaCtrl', function($scope,$http,$rootScope, $location) {
     $scope.estufa = {};
+    $scope.user = $location.url();
+    $scope.user= $scope.user.split('/',2);
     $scope.submitForm = function(form){
         $http.post('json/estfNew.php',{nombre : $scope.estufa.nombre, modelo : $scope.estufa.modelo, ip : $scope.estufa.ip, mac : $scope.estufa.mac})
             .success(function(data){
@@ -748,10 +778,12 @@ colorAdminApp.controller('estfNuevaCtrl', function($scope,$http,$rootScope, $loc
                 }
                 else{
                     bootbox.alert("Estufa Creada Correctamente");
+                    $location.url($scope.id[0].usro_id +  "/estf/general");
                 }
             });
     };
 });
+
 
 colorAdminApp.controller('usroGeneralCtrl', function($scope,$http,$rootScope, $state) {
 
@@ -767,64 +799,16 @@ colorAdminApp.controller('usroGeneralCtrl', function($scope,$http,$rootScope, $s
         });
 });
 colorAdminApp.controller('estfGeneralCtrl', function($scope,$http,$rootScope, $state,$location) {
-    var blackTransparent = 'rgba(0,0,0,0.6)';
-    var whiteTransparent = 'rgba(255,255,255,0.4)';
-    var month = [];
-    month[0] = "January";
-    month[1] = "February";
-    month[2] = "March";
-    month[3] = "April";
-    month[4] = "May";
-    month[5] = "Jun";
-    month[6] = "July";
-    month[7] = "August";
-    month[8] = "September";
-    month[9] = "October";
-    month[10] = "November";
-    month[11] = "December";
     $scope.user = $location.url();
     $scope.user= $scope.user.split('/',2);
     $http.post('json/usroAll.php',{nombre : $scope.user[1]}).
         success(function(data) {
             $scope.usuarios = data;
         });
-
-
-    $scope.data10 = [];
-    $http.post('json/gsesOctubre.php').
-        success(function(data6) {
-            var consumo2 = data6;
-            for (i = 0; i < 12; i++) {
-                $scope.agosto = Math.round(consumo2[i].consum);
-                $scope.data10.push($scope.agosto);
-            }
-        });
-
-
-    $scope.data11 = [];
-    $http.post('json/gsesNox.php').
-        success(function(data8) {
-            var nox = data8;
-            var ins = 1;
-            for (i = 0; i < 10; i++) {
-                var sum = 0;
-                for(j=0;j<10;j++){
-                    sum = sum + parseFloat(nox[ins].gses_nox);
-
-                    ins++;
-                }
-                $scope.noxP = Math.round(sum / 10);
-                $scope.data11.push($scope.noxP);
-
-
-            }
-        });
-    $scope.data12 = [];
     $scope.data21 = [];
     $http.post('json/estfGeneral.php').
         success(function(data20){
             var estf = data20;
-            //$scope.data21 = [[estf[0].estf_id,estf[0].estf_nombre,estf[0].estf_modelo,estf[0].estf_ip,estf[0].estf_mac,estf[0].estf_comentarios]];
             for(j=0;j<100;j++){
                 $scope.data21[j]=[];
                 $scope.data21[j].push(estf[j].estf_id);
@@ -833,21 +817,28 @@ colorAdminApp.controller('estfGeneralCtrl', function($scope,$http,$rootScope, $s
                 $scope.data21[j].push(estf[j].estf_ip);
                 $scope.data21[j].push(estf[j].estf_mac);
                 $scope.data21[j].push(estf[j].estf_comentarios);
+                $scope.data21[j].push("<a href='#/"+$scope.user[1]+"/estf/"+estf[j].estf_id+"/editar'><button class='btn btn-warning m-r-5 m-b-5'>Editar</button></a>")
             }
 
         });
-
-
     $http.post('json/gsesNoxS.php').
         success(function(data9) {
             var noxs = data9;
-            for (i=0;i<10;i++){
-                $scope.data12.push(Math.round(noxs[i].emision));
-            }
-            console.log($scope.data21);$('#data-table').DataTable({
+            $('#data-table').DataTable({
                 responsive: true,
                 data : $scope.data21
             });
+        });
+    var blackTransparent = 'rgba(0,0,0,0.6)';
+    var whiteTransparent = 'rgba(255,255,255,0.4)';
+
+
+
+
+    $scope.data10 = [];
+    $http.post('json/gsesOctubre.php').
+        success(function(data6) {
+            var consumo2 = data6;
         });
 
 
