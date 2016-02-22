@@ -18,7 +18,7 @@
         <!-- begin sidebar nav -->
         <ul class="nav">
             <li class="nav-header">Navegación</li>
-            <li class="has-sub" ng-class="{active:$state.includes('app.dashboard')}">
+            <li class="has-sub" ng-class="{active:$state.includes('user.dashboard')}">
                 <a href="javascript:;">
                     <b class="caret pull-right"></b>
                     <i class="fa fa-laptop"></i>
@@ -29,7 +29,7 @@
                 </ul>
             </li>
 
-            <li class="has-sub" ng-class="{active:$state.includes('app.ui')}">
+            <li class="has-sub" ng-class="{active:$state.includes('user.estf')}">
                 <a href="javascript:;">
                     <b class="caret pull-right"></b>
                     <i class="fa fa-suitcase"></i>
@@ -38,12 +38,10 @@
                 <ul class="sub-menu">
                     <li ui-sref-active="active"><a ui-sref="user.estf.general">General</a></li>
                     <li ui-sref-active="active"><a ui-sref="user.estf.nuevo">Nueva Estufa</a></li>
-                    <li ui-sref-active="active"><a ui-sref="user.estf.editar">Editar Estufa</a></li>
-                    <li ui-sref-active="active"><a ui-sref="user.estf.consultar">Consultar Estufa</a></li>
-                    <li ui-sref-active="active"><a ui-sref="user.estf.eliminar">Eliminar Estufa</a></li>
+
                 </ul>
             </li>
-            <li class="has-sub" ng-class="{active:$state.includes('app.form')}">
+            <li class="has-sub" ng-class="{active:$state.includes('user.usro')}">
                 <a href="javascript:;">
                     <b class="caret pull-right"></b>
                     <i class="fa fa-user"></i>
@@ -52,16 +50,13 @@
                 <ul class="sub-menu">
                     <li ui-sref-active="active"><a ui-sref="user.usro.general">General</a></li>
                     <li ui-sref-active="active"><a ui-sref="user.usro.nuevo">Nuevo Usuario</a></li>
-                    <li ui-sref-active="active"><a ui-sref="user.usro.editar">Editar Usuario</a></li>
-                    <li ui-sref-active="active"><a ui-sref="user.usro.consultar">Consultar Usuario</a></li>
-                    <li ui-sref-active="active"><a ui-sref="user.usro.eliminar">Eliminar Usuario</a></li>
                 </ul>
             </li>
             <li class="has-sub" ng-class="{active:$state.includes('app.table')}">
                 <a href="javascript:;">
                     <b class="caret pull-right"></b>
                     <i class="fa fa-th"></i>
-                    <span>Historial  </span>
+                    <span>Consumo</span>
                 </a>
                 <ul class="sub-menu">
                     <li ui-sref-active="active"><a ui-sref="app.table.basic">Tablas Generles</a></li>

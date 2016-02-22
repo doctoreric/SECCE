@@ -799,52 +799,44 @@ colorAdminApp.controller('usroGeneralCtrl', function($scope,$http,$rootScope, $s
         });
 });
 colorAdminApp.controller('estfGeneralCtrl', function($scope,$http,$rootScope, $state,$location) {
+    var estf = [];
+    var table = $('#data-table').DataTable({
+        responsive: true,
+        data : $scope.data21
+    });
+    $scope.data21 = [];
     $scope.user = $location.url();
     $scope.user= $scope.user.split('/',2);
     $http.post('json/usroAll.php',{nombre : $scope.user[1]}).
         success(function(data) {
             $scope.usuarios = data;
-        });
-    $scope.data21 = [];
-    $http.post('json/estfGeneral.php').
-        success(function(data20){
-            var estf = data20;
-            for(j=0;j<100;j++){
-                $scope.data21[j]=[];
-                $scope.data21[j].push(estf[j].estf_id);
-                $scope.data21[j].push(estf[j].estf_nombre);
-                $scope.data21[j].push(estf[j].estf_modelo);
-                $scope.data21[j].push(estf[j].estf_ip);
-                $scope.data21[j].push(estf[j].estf_mac);
-                $scope.data21[j].push(estf[j].estf_comentarios);
-                $scope.data21[j].push("<a href='#/"+$scope.user[1]+"/estf/"+estf[j].estf_id+"/editar'><button class='btn btn-warning m-r-5 m-b-5'>Editar</button></a>")
-            }
-
-        });
-    $http.post('json/gsesNoxS.php').
-        success(function(data9) {
-            var noxs = data9;
-            $('#data-table').DataTable({
+            table.destroy();
+            table = $('#data-table').DataTable({
                 responsive: true,
                 data : $scope.data21
             });
         });
-    var blackTransparent = 'rgba(0,0,0,0.6)';
-    var whiteTransparent = 'rgba(255,255,255,0.4)';
-
-
-
-
-    $scope.data10 = [];
-    $http.post('json/gsesOctubre.php').
-        success(function(data6) {
-            var consumo2 = data6;
-        });
-
-
-
-
-
+    for(i=0;$scope.data21==[] || i < 3 ;i++) {
+        $http.post('json/estfGeneral.php').
+            success(function (data20) {
+                estf = data20;
+                for (j = 0; j < 100; j++) {
+                    $scope.data21[j] = [];
+                    $scope.data21[j].push(estf[j].estf_id);
+                    $scope.data21[j].push(estf[j].estf_nombre);
+                    $scope.data21[j].push(estf[j].estf_modelo);
+                    $scope.data21[j].push(estf[j].estf_ip);
+                    $scope.data21[j].push(estf[j].estf_mac);
+                    $scope.data21[j].push(estf[j].estf_comentarios);
+                    $scope.data21[j].push("<a href='#/" + $scope.user[1] + "/estf/" + estf[j].estf_id + "/editar'><button class='btn btn-warning m-r-5 m-b-5'>Editar</button></a>")
+                }
+                table.destroy();
+                table = $('#data-table').DataTable({
+                    responsive: true,
+                    data : $scope.data21
+                });
+            });
+    }
 
 });
 
