@@ -52,27 +52,7 @@
                     <li ui-sref-active="active"><a ui-sref="user.usro.nuevo">Nuevo Usuario</a></li>
                 </ul>
             </li>
-            <li class="has-sub" ng-class="{active:$state.includes('app.table')}">
-                <a href="javascript:;">
-                    <b class="caret pull-right"></b>
-                    <i class="fa fa-th"></i>
-                    <span>Consumo</span>
-                </a>
-                <ul class="sub-menu">
-                    <li ui-sref-active="active"><a ui-sref="app.table.basic">Tablas Generles</a></li>
-                    <li class="has-sub" ng-class="{active:$state.includes('app.table.manage')}">
-                        <a href="javascript:;"><b class="caret pull-right"></b>Tablas Administradas</a>
-                        <ul class="sub-menu">
-                            <li ui-sref-active="active"><a ui-sref="app.table.manage.default">Temperatura</a></li>
-                            <li ui-sref-active="active"><a ui-sref="app.table.manage.autofill">Gases</a></li>
-                            <li ui-sref-active="active"><a ui-sref="app.table.manage.buttons">Humedad</a></li>
-                            <li ui-sref-active="active"><a ui-sref="app.table.manage.colReorder">Estufas</a></li>
-                            <li ui-sref-active="active"><a ui-sref="app.table.manage.fixedColumns">Usuarios</a></li>
-                        </ul>
-                    </li>
-                </ul>
-            </li>
-            <li class="has-sub">
+            <li class="has-sub" ng-class="{active:$state.includes('user.tnda')}">
                 <a href="javascript:;">
                     <b class="caret pull-right"></b>
                     <i class="fa fa-star"></i> 
@@ -84,56 +64,35 @@
                 </ul>
             </li>
 
-            <li class="has-sub" ng-class="{active:$state.includes('app.chart')}">
-                <a href="javascript:;">
-                    <b class="caret pull-right"></b>
-                    <i class="fa fa-area-chart"></i>
-                    <span>Graficos</span>
-                </a>
-                <ul class="sub-menu">
-                    <li ui-sref-active="active"><a ui-sref="app.chart.flot">Temperatura</a></li>
-                    <li ui-sref-active="active"><a ui-sref="app.chart.morris">Gases</a></li>
-                    <li ui-sref-active="active"><a ui-sref="app.chart.js">Humedad</a></li>
-                    <li ui-sref-active="active"><a ui-sref="app.chart.d3">Estufas</a></li>
-                </ul>
-            </li>
-            <li class="has-sub" ng-class="{active:$state.includes('app.chart')}">
+            <li class="has-sub" ng-class="{active:$state.includes('user.tmpr')}">
                 <a href="javascript:;">
                     <b class="caret pull-right"></b>
                     <i class="fa fa-sun-o"></i>
                     <span>Temperatura</span>
                 </a>
                 <ul class="sub-menu">
-                    <li ui-sref-active="active"><a ui-sref="app.chart.flot">Flot Chart</a></li>
-                    <li ui-sref-active="active"><a ui-sref="app.chart.morris">Morris Chart</a></li>
-                    <li ui-sref-active="active"><a ui-sref="app.chart.js">Chart JS</a></li>
-                    <li ui-sref-active="active"><a ui-sref="app.chart.d3">d3 Chart <i class="fa fa-paper-plane text-theme m-l-5"></i></a></li>
+                    <li ui-sref-active="active"><a ui-sref="user.tmpr.general">Tabla General</a></li>
                 </ul>
             </li>
-            <li class="has-sub" ng-class="{active:$state.includes('app.chart')}">
+            <li class="has-sub" ng-class="{active:$state.includes('user.gses')}">
                 <a href="javascript:;">
                     <b class="caret pull-right"></b>
                     <i class="fa fa-fire"></i>
                     <span>Gases</span>
                 </a>
                 <ul class="sub-menu">
-                    <li ui-sref-active="active"><a ui-sref="app.chart.flot">Flot Chart</a></li>
-                    <li ui-sref-active="active"><a ui-sref="app.chart.morris">Morris Chart</a></li>
-                    <li ui-sref-active="active"><a ui-sref="app.chart.js">Chart JS</a></li>
-                    <li ui-sref-active="active"><a ui-sref="app.chart.d3">d3 Chart <i class="fa fa-paper-plane text-theme m-l-5"></i></a></li>
+                    <li ui-sref-active="active"><a ui-sref="user.gses.general">Tabla General</a></li>
+
                 </ul>
             </li>
-            <li class="has-sub" ng-class="{active:$state.includes('app.chart')}">
+            <li class="has-sub" ng-class="{active:$state.includes('user.hmda')}">
                 <a href="javascript:;">
                     <b class="caret pull-right"></b>
                     <i class="fa fa-cloud"></i>
                     <span>Humedad</span>
                 </a>
                 <ul class="sub-menu">
-                    <li ui-sref-active="active"><a ui-sref="app.chart.flot">Flot Chart</a></li>
-                    <li ui-sref-active="active"><a ui-sref="app.chart.morris">Morris Chart</a></li>
-                    <li ui-sref-active="active"><a ui-sref="app.chart.js">Chart JS</a></li>
-                    <li ui-sref-active="active"><a ui-sref="app.chart.d3">d3 Chart <i class="fa fa-paper-plane text-theme m-l-5"></i></a></li>
+                    <li ui-sref-active="active"><a ui-sref="user.hmda.general">Tabla General</a></li>
                 </ul>
             </li>
             <!-- begin sidebar minify button -->

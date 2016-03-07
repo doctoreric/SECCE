@@ -22,6 +22,8 @@ colorAdminApp.config(['$stateProvider', '$urlRouterProvider', function($statePro
             templateUrl: 'template/app.html',
             abstract: true
         })
+
+
         .state('user.usro', {
             url: '/usro',
             template: '<div ui-view></div>',
@@ -96,7 +98,6 @@ colorAdminApp.config(['$stateProvider', '$urlRouterProvider', function($statePro
         })
 
 
-
         .state('user.estf.nuevo', {
             url: '/nuevo',
             data: { pageTitle: 'Estufa Nuevo' },
@@ -137,6 +138,81 @@ colorAdminApp.config(['$stateProvider', '$urlRouterProvider', function($statePro
             url: '/general',
             data: { pageTitle: 'Estufas General' },
             templateUrl: 'views/estfGeneral.html',
+            resolve: {
+                service: ['$ocLazyLoad', function($ocLazyLoad) {
+                    return $ocLazyLoad.load({
+                        serie: true,
+                        files: [
+                            'assets/plugins/DataTables/media/css/dataTables.bootstrap.min.css',
+                            'assets/plugins/DataTables/extensions/Responsive/css/responsive.bootstrap.min.css',
+                            'assets/plugins/DataTables/media/js/jquery.dataTables.js',
+                            'assets/plugins/DataTables/media/js/dataTables.bootstrap.min.js',
+                            'assets/plugins/DataTables/extensions/Responsive/js/dataTables.responsive.min.js'
+                        ]
+                    });
+                }]
+            }
+        })
+        // Clase Temperatura
+        .state('user.tmpr', {
+            url: '/tmpr',
+            template: '<div ui-view></div>',
+            abstract: true
+        })
+        .state('user.tmpr.general', {
+            url: '/general',
+            data: { pageTitle: 'Temperatura General' },
+            templateUrl: 'views/tmprGeneral.html',
+            resolve: {
+                service: ['$ocLazyLoad', function($ocLazyLoad) {
+                    return $ocLazyLoad.load({
+                        serie: true,
+                        files: [
+                            'assets/plugins/DataTables/media/css/dataTables.bootstrap.min.css',
+                            'assets/plugins/DataTables/extensions/Responsive/css/responsive.bootstrap.min.css',
+                            'assets/plugins/DataTables/media/js/jquery.dataTables.js',
+                            'assets/plugins/DataTables/media/js/dataTables.bootstrap.min.js',
+                            'assets/plugins/DataTables/extensions/Responsive/js/dataTables.responsive.min.js'
+                        ]
+                    });
+                }]
+            }
+        })
+        // Clase Gases
+        .state('user.gses', {
+            url: '/gses',
+            template: '<div ui-view></div>',
+            abstract: true
+        })
+        .state('user.gses.general', {
+            url: '/general',
+            data: { pageTitle: 'Gases General' },
+            templateUrl: 'views/gsesGeneral.html',
+            resolve: {
+                service: ['$ocLazyLoad', function($ocLazyLoad) {
+                    return $ocLazyLoad.load({
+                        serie: true,
+                        files: [
+                            'assets/plugins/DataTables/media/css/dataTables.bootstrap.min.css',
+                            'assets/plugins/DataTables/extensions/Responsive/css/responsive.bootstrap.min.css',
+                            'assets/plugins/DataTables/media/js/jquery.dataTables.js',
+                            'assets/plugins/DataTables/media/js/dataTables.bootstrap.min.js',
+                            'assets/plugins/DataTables/extensions/Responsive/js/dataTables.responsive.min.js'
+                        ]
+                    });
+                }]
+            }
+        })
+        // Clase Humedad
+        .state('user.hmda', {
+            url: '/hmda',
+            template: '<div ui-view></div>',
+            abstract: true
+        })
+        .state('user.hmda.general', {
+            url: '/general',
+            data: { pageTitle: 'Humedad General' },
+            templateUrl: 'views/hmdaGeneral.html',
             resolve: {
                 service: ['$ocLazyLoad', function($ocLazyLoad) {
                     return $ocLazyLoad.load({
@@ -202,19 +278,16 @@ colorAdminApp.config(['$stateProvider', '$urlRouterProvider', function($statePro
                 service: ['$ocLazyLoad', function($ocLazyLoad) {
                     return $ocLazyLoad.load({
                         serie: true,
+                        name : 'angular-flot',
                         files: [
-                            'assets/plugins/jquery-jvectormap/jquery-jvectormap-1.2.2.css',
-                            'assets/plugins/bootstrap-calendar/css/bootstrap_calendar.css',
-                            'assets/plugins/gritter/css/jquery.gritter.css',
-                            'assets/plugins/morris/morris.css',
-                            'assets/plugins/morris/raphael.min.js',
-                            'assets/plugins/morris/morris.js',
-                            'assets/plugins/jquery-jvectormap/jquery-jvectormap-1.2.2.min.js',
-                            'assets/plugins/jquery-jvectormap/jquery-jvectormap-world-merc-en.js',
-                            'assets/plugins/bootstrap-calendar/js/bootstrap_calendar.min.js',
-                            'assets/plugins/gritter/js/jquery.gritter.js',
-                            'assets/plugins/chart-js/chart.js',
-                            'assets/plugins/chart-js/angular/angles.js'
+                            'assets/plugins/flot/jquery.flot.min.js',
+                            'assets/plugins/flot/jquery.flot.time.min.js',
+                            'assets/plugins/flot/jquery.flot.resize.min.js',
+                            'assets/plugins/flot/jquery.flot.pie.min.js',
+                            'assets/plugins/flot/jquery.flot.stack.min.js',
+                            'assets/plugins/flot/jquery.flot.crosshair.min.js',
+                            'assets/plugins/flot/jquery.flot.categories.js',
+                            'assets/plugins/flot/angular-flot.js',
                         ]
                     });
                 }]

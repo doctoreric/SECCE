@@ -486,257 +486,289 @@ colorAdminApp.controller('indexController', function($scope, $http, $location,$r
 
 });
 
-colorAdminApp.controller('tndaController', function($scope, $http, $location,$rootScope, $state) {
-    var blackTransparent = 'rgba(0,0,0,0.6)';
-    var whiteTransparent = 'rgba(255,255,255,0.4)';
-    var month = [];
-    month[0] = "January";
-    month[1] = "February";
-    month[2] = "March";
-    month[3] = "April";
-    month[4] = "May";
-    month[5] = "Jun";
-    month[6] = "July";
-    month[7] = "August";
-    month[8] = "September";
-    month[9] = "October";
-    month[10] = "November";
-    month[11] = "December";
-    $scope.user = $location.url();
-    $scope.user= $scope.user.split('/',2);
-    $http.post('json/usroAll.php',{nombre : $scope.user[1]}).
-        success(function(data) {
-            $scope.usuarios = data;
-        });
-
-    $scope.data10 = [];
-    $http.post('json/gsesOctubre.php').
-        success(function(data6) {
-            var consumo2 = data6;
-            for (i = 0; i < 12; i++) {
-                $scope.agosto = (consumo2[i].consum);
-                $scope.data10.push($scope.agosto);
-            }
-        });
-    $http.post('json/gsesSum.php').
-        success(function(data7) {
-            $scope.gasessum = data7;
-        });
-
-    $scope.data11 = [];
-    $http.post('json/gsesNox.php').
-        success(function(data8) {
-            var nox = data8;
-            var ins = 1;
-            for (i = 0; i < 10; i++) {
-                var sum = 0;
-                for(j=0;j<10;j++){
-                    sum = sum + parseFloat(nox[ins].gses_nox);
-
-                    ins++;
-                }
-                $scope.noxP = Math.round(sum / 10);
-                $scope.data11.push($scope.noxP);
-
-
-            }
-        });
+colorAdminApp.controller('tndaCtrl', function($scope, $http, $location,$rootScope, $state) {
     $scope.data12 = [];
+    $scope.data13 = [];
+    $scope.data14 = [];
+    $scope.data15 = [];
     $http.post('json/tempTend.php').
         success(function(data9) {
             var noxs = data9;
             for (i=0;i<20;i++){
-                $scope.data12.push(noxs[i].temp);
-                console.log($scope.data11);
-            }
+                $scope.data12[i]=[];
+                $scope.data12[i].push(i,noxs[i].temp);
+            }console.log($scope.data12);
         });
-    // white
-    var white = 'rgba(255,255,255,1.0)';
-    var fillBlack = 'rgba(45, 53, 60, 0.6)';
-    var fillBlackLight = 'rgba(45, 53, 60, 0.2)';
-    var strokeBlack = 'rgba(45, 53, 60, 0.8)';
-    var highlightFillBlack = 'rgba(45, 53, 60, 0.8)';
-    var highlightStrokeBlack = 'rgba(45, 53, 60, 1)';
+    $http.post('json/tempTend2.php').
+        success(function(data9) {
+            var noxs = data9;
+            for (i=0;i<20;i++){
+                $scope.data13[i]=[];
+                $scope.data13[i].push(i,noxs[i].temp);
+            }console.log($scope.data13);
+        });
 
-    // blue
-    var fillBlue = 'rgba(52, 143, 226, 0.6)';
-    var fillBlueLight = 'rgba(52, 143, 226, 0.2)';
-    var strokeBlue = 'rgba(52, 143, 226, 0.8)';
-    var highlightFillBlue = 'rgba(52, 143, 226, 0.8)';
-    var highlightStrokeBlue = 'rgba(52, 143, 226, 1)';
-
-    // grey
-    var fillGrey = 'rgba(182, 194, 201, 0.6)';
-    var fillGreyLight = 'rgba(182, 194, 201, 0.2)';
-    var strokeGrey = 'rgba(182, 194, 201, 0.8)';
-    var highlightFillGrey = 'rgba(182, 194, 201, 0.8)';
-    var highlightStrokeGrey = 'rgba(182, 194, 201, 1)';
-
-    // green
-    var fillGreen = 'rgba(0, 172, 172, 0.6)';
-    var fillGreenLight = 'rgba(0, 172, 172, 0.2)';
-    var strokeGreen = 'rgba(0, 172, 172, 0.8)';
-    var highlightFillGreen = 'rgba(0, 172, 172, 0.8)';
-    var highlightStrokeGreen = 'rgba(0, 172, 172, 1)';
-
-    // purple
-    var fillPurple = 'rgba(114, 124, 182, 0.6)';
-    var fillPurpleLight = 'rgba(114, 124, 182, 0.2)';
-    var strokePurple = 'rgba(114, 124, 182, 0.8)';
-    var highlightFillPurple = 'rgba(114, 124, 182, 0.8)';
-    var highlightStrokePurple = 'rgba(114, 124, 182, 1)';
-
-
-    /* ChartJS Bar Chart
+    $http.post('json/tempCald.php').
+        success(function(data9) {
+            var noxs = data9;
+            for (i=0;i<20;i++){
+                $scope.data14[i]=[];
+                $scope.data14[i].push(i,noxs[i].temp);
+            }console.log($scope.data14);
+        });
+    $http.post('json/tempCald2.php').
+        success(function(data9) {
+            var noxs = data9;
+            for (i=0;i<20;i++){
+                $scope.data15[i]=[];
+                $scope.data15[i].push(i,noxs[i].temp);
+            }console.log($scope.data15);
+        });
+    /* Stacked Chart
      ------------------------- */
-    var randomScalingFactor = function() {
-        return Math.round(Math.random()*100)
+    var d1 = [], d2 = [], d3 = [], d4 = [], d5 = [], d6 = [];
+    for (var a = 0; a <= 5; a += 1) {
+        d1.push([a, parseInt(Math.random() * 5)]);
+        d2.push([a, parseInt(Math.random() * 5 + 5)]);
+        d3.push([a, parseInt(Math.random() * 5 + 5)]);
+        d4.push([a, parseInt(Math.random() * 5 + 5)]);
+        d5.push([a, parseInt(Math.random() * 5 + 5)]);
+        d6.push([a, parseInt(Math.random() * 5 + 5)]);
+    }
+    var ticksLabel = [[0, "Monday"], [1, "Tuesday"], [2, "Wednesday"], [3, "Thursday"], [4, "Friday"], [5, "Saturday"]];
+    var stackedChartOptions = {
+        xaxis: {  tickColor: 'transparent',  ticks: ticksLabel},
+        yaxis: {  tickColor: '#ddd', ticksLength: 10},
+        grid: {  hoverable: true,  tickColor: "#ccc", borderWidth: 0, borderColor: 'rgba(0,0,0,0.2)' },
+        series: {
+            stack: true,
+            lines: { show: false, fill: false, steps: false },
+            bars: { show: true, barWidth: 0.5, align: 'center', fillColor: null },
+            highlightColor: 'rgba(0,0,0,0.8)'
+        },
+        legend: { show: true, labelBoxBorderColor: '#ccc', position: 'ne', noColumns: 1 }
     };
+    var stackedChartData = [
+        { data:d1, color: purpleDark, label: 'China', bars: { fillColor: purpleDark } },
+        { data:d2, color: purple, label: 'Russia', bars: { fillColor: purple } },
+        { data:d3, color: purpleLight, label: 'Canada', bars: { fillColor: purpleLight } },
+        { data:d4, color: blueDark, label: 'Japan', bars: { fillColor: blueDark } },
+        { data:d5, color: blue, label: 'USA', bars: { fillColor: blue } },
+        { data:d6, color: blueLight, label: 'Others', bars: { fillColor: blueLight } }
+    ];
 
-    var barChartData = {
-        labels : ['Enero','Febrero','Marzo','Abril','Mayo','Junio','Julio','Agosto','Septiembre','Octubre','Nomviembre','Diciembre'],
-        datasets : [{
+    var previousXValue = null;
+    var previousYValue = null;
+    $("#stacked-chart").bind("plothover", function (event, pos, item) {
+        if (item) {
+            var y = item.datapoint[1] - item.datapoint[2];
+            if (previousXValue != item.series.label || y != previousYValue) {
+                previousXValue = item.series.label;
+                previousYValue = y;
+                $("#tooltip").remove();
+                $('<div id="tooltip" class="flot-tooltip">' + item.series.label + '</div>').css({ top: item.pageY, left: item.pageX + 35 }).appendTo("body").fadeIn(200);
+            }
+        } else {
+            $("#tooltip").remove();
+            previousXValue = null;
+            previousYValue = null;
+        }
+    });
 
-            fillColor : fillBlueLight,
-            strokeColor : strokeBlue,
-            highlightFill: highlightFillBlue,
-            highlightStroke: highlightStrokeBlue,
-            data : $scope.data10
-        }]
+    this.stackedChartOptions = stackedChartOptions;
+    this.stackedChartData = stackedChartData;
+
+
+    /* Tracking Chart
+     ------------------------- */
+    var sin = [], cos = [];
+    for (var i = 0; i < 14; i += 0.1) {
+        sin.push([i, Math.sin(i)]);
+        cos.push([i, Math.cos(i)]);
+    }
+
+    var trackingChartData = [
+        { data: sin, label: "Series1", color: dark, shadowSize: 0},
+        { data: cos, label: "Series2", color: red, shadowSize: 0}
+    ];
+    var trackingChartOptions = {
+        series: { lines: { show: true } },
+        crosshair: { mode: "x", color: grey },
+        grid: { hoverable: true, autoHighlight: false, borderColor: '#ccc', borderWidth: 0 },
+        xaxis: {  tickLength: 0 },
+        yaxis: {  tickColor: '#ddd' },
+        legend: {
+            labelBoxBorderColor: '#ddd',
+            backgroundOpacity: 0.4,
+            color:'#fff',
+            show: true
+        }
+    };
+    this.trackingChartData = trackingChartData;
+    this.trackingChartOptions = trackingChartOptions;
+
+
+    /* Bar Chart
+     ------------------------- */
+    var barChartData = [{
+        data: [ ["January", 10], ["February", 8], ["March", 4], ["April", 13], ["May", 17], ["June", 9] ],
+        color: purple
+    }];
+    var barChartOptions = {
+        series: {
+            bars: {
+                show: true, barWidth: 0.4, align: 'center', fill: true, fillColor: purple, zero: true
+            }
+        },
+        xaxis: { mode: "categories", tickColor: '#ddd', tickLength: 0 },
+        grid: { borderWidth: 0 }
     };
     this.barChartData = barChartData;
+    this.barChartOptions = barChartOptions;
 
 
-    /* ChartJS Doughnut Chart
+    /* Pie Chart
      ------------------------- */
-    var doughnutChartData = [
-        { value: 300, color: fillGrey, highlight: highlightFillGrey, label: 'Grey' },
-        { value: 50, color: fillGreen, highlight: highlightFillGreen, label: 'Green' },
-        { value: 100, color: fillBlue, highlight: highlightFillBlue, label: 'Blue' },
-        { value: 40, color: fillPurple, highlight: highlightFillPurple, label: 'Purple' },
-        { value: 120, color: fillBlack, highlight: highlightFillBlack, label: 'Black' }
-    ];
-    this.doughnutChartData = doughnutChartData;
-
-
-    /* ChartJS Line Chart
-     ------------------------- */
-    var lineChartData = {
-        labels : ['0',' 1 hr','1.5 hr',' 2 hr',' 2.5 hr',' 3 hr','3.5 hr',' 4 hr',' 4.5 hr',' 5 hr','5.5 hr','6 hr','6.5 hr','7 hr','7.5 hr','8 hr','8.5 hr','9 hr','9.5 hr'],
-        datasets : [ {
-            label: 'captura',
-            fillColor : 'rgba(52,143,226,0.2)',
-            strokeColor : 'rgba(52,143,226,1)',
-            pointColor : 'rgba(52,143,226,1)',
-            pointStrokeColor : '#fff',
-            pointHighlightFill : '#fff',
-            pointHighlightStroke : 'rgba(52,143,226,1)',
-            data : $scope.data12
-        }]
-    };
-    this.lineChartData = lineChartData;
-
-
-    /* ChartJS Pie Chart
-     ------------------------- */
-    var pieChartData = [
-        { value: 300, color: strokePurple, highlight: highlightStrokePurple, label: 'Purple' },
-        { value: 50, color: strokeBlue, highlight: highlightStrokeBlue, label: 'Blue' },
-        { value: 100, color: strokeGreen, highlight: highlightStrokeGreen, label: 'Green' },
-        { value: 40, color: strokeGrey, highlight: highlightStrokeGrey, label: 'Grey' },
-        { value: 120, color: strokeBlack, highlight: highlightStrokeBlack, label: 'Black' }
-    ];
-    this.pieChartData = pieChartData;
-
-
-    /* ChartJS Polar Chart
-     ------------------------- */
-    var polarChartData = [
-        { value: 300, color: strokePurple, highlight: highlightStrokePurple, label: 'Purple' },
-        { value: 50, color: strokeBlue, highlight: highlightStrokeBlue, label: 'Blue' },
-        { value: 100, color: strokeGreen, highlight: highlightStrokeGreen, label: 'Green' },
-        { value: 40, color: strokeGrey, highlight: highlightStrokeGrey, label: 'Grey' },
-        { value: 120, color: strokeBlack, highlight: highlightStrokeBlack, label: 'Black' }
-    ];
-    this.polarChartData = polarChartData;
-
-
-    /* ChartJS Radar Chart
-     ------------------------- */
-    var radarChartData = {
-        labels: ['Eating', 'Drinking', 'Sleeping', 'Designing', 'Coding', 'Cycling', 'Running'],
-        datasets: [{
-            label: 'My First dataset',
-            fillColor: 'rgba(45,53,60,0.2)',
-            strokeColor: 'rgba(45,53,60,1)',
-            pointColor: 'rgba(45,53,60,1)',
-            pointStrokeColor: '#fff',
-            pointHighlightFill: '#fff',
-            pointHighlightStroke: 'rgba(45,53,60,1)',
-            data: [65,59,90,81,56,55,40]
-        }, {
-            label: 'My Second dataset',
-            fillColor: 'rgba(52,143,226,0.2)',
-            strokeColor: 'rgba(52,143,226,1)',
-            pointColor: 'rgba(52,143,226,1)',
-            pointStrokeColor: '#fff',
-            pointHighlightFill: '#fff',
-            pointHighlightStroke: 'rgba(52,143,226,1)',
-            data: [28,48,40,19,96,27,100]
-        }]
-    };
-    this.radarChartData = radarChartData;
-
-
-    /* ChartJS Chart Options
-     ------------------------- */
-    var chartOptions = {
-        animation: true,
-        animationSteps: 60,
-        animationEasing: 'easeOutQuart',
-        showScale: true,
-        scaleOverride: false,
-        scaleSteps: null,
-        scaleStepWidth: null,
-        scaleStartValue: null,
-        scaleLineColor: 'rgba(0,0,0,.1)',
-        scaleLineWidth: 1,
-        scaleShowLabels: true,
-        scaleLabel: '<%=value%>',
-        scaleIntegersOnly: true,
-        scaleBeginAtZero: false,
-        scaleFontFamily: '"Open Sans", "Helvetica Neue", "Helvetica", "Arial", sans-serif',
-        scaleFontSize: 12,
-        scaleFontStyle: 'normal',
-        scaleFontColor: '#707478',
-        responsive: true,
-        maintainAspectRatio: true,
-        showTooltips: true,
-        customTooltips: false,
-        tooltipEvents: ['mousemove', 'touchstart', 'touchmove'],
-        tooltipFillColor: 'rgba(0,0,0,0.8)',
-        tooltipFontFamily: '"Open Sans", "Helvetica Neue", "Helvetica", "Arial", sans-serif',
-        tooltipFontSize: 12,
-        tooltipFontStyle: 'normal',
-        tooltipFontColor: '#ccc',
-        tooltipTitleFontFamily: '"Open Sans", "Helvetica Neue", "Helvetica", "Arial", sans-serif',
-        tooltipTitleFontSize: 12,
-        tooltipTitleFontStyle: 'bold',
-        tooltipTitleFontColor: '#fff',
-        tooltipYPadding: 10,
-        tooltipXPadding: 10,
-        tooltipCaretSize: 8,
-        tooltipCornerRadius: 3,
-        tooltipXOffset: 10,
-        tooltipTemplate: '<%if (label){%><%=label%>: <%}%><%= value %>',
-        multiTooltipTemplate: '<%= value %>',
-        onAnimationProgress: function(){},
-        onAnimationComplete: function(){}
+    var pieChartData = [];
+    var series = 3;
+    var colorArray = [purple, dark, grey];
+    for (var i=0; i<series; i++) {
+        pieChartData[i] = { label: "Series"+(i+1), data: Math.floor(Math.random()*100)+1, color: colorArray[i] };
     }
-    this.chartOptions = chartOptions;
+    var pieChartOptions = {
+        series: {
+            pie: {
+                show: true
+            }
+        },
+        grid: { hoverable: true, clickable: true },
+        legend: { labelBoxBorderColor: '#ddd', backgroundColor: 'none' }
+    };
+    this.pieChartData = pieChartData;
+    this.pieChartOptions = pieChartOptions;
+
+
+    /* Donut Chart
+     ------------------------- */
+    var donutChartData = [];
+    var donutChartOptions = {
+        series: {
+            pie: {
+                innerRadius: 0.5,
+                show: true,
+                combine: { color: '#999', threshold: 0.1 }
+            }
+        },
+        grid:{ borderWidth:0, hoverable: true, clickable: true },
+        legend: { show: false }
+    };
+    var colorArray = [dark, green, purple];
+    var nameArray = ['Unique Visitor', 'Bounce Rate', 'Total Page Views', 'Avg Time On Site'];
+    var dataArray = [20,14,12,31];
+    for( var i = 0; i<3; i++) {
+        donutChartData[i] = { label: nameArray[i], data: dataArray[i], color: colorArray[i] };
+    }
+
+    this.donutChartData = donutChartData;
+    this.donutChartOptions = donutChartOptions;
+
+
+    /* Interactive Chart
+     ------------------------- */
+    var interactiveChartOptions = {
+        xaxis: {  tickColor: '#ddd',tickSize: 1 },
+        yaxis: {  tickColor: '#ddd', tickSize: 1 },
+        grid: {  hoverable: true,  clickable: true, tickColor: "#ccc", borderWidth: 1, borderColor: '#ddd' },
+        legend: { labelBoxBorderColor: '#ddd', margin: 0, noColumns: 1, show: true }
+    };
+
+    var interactiveChartData = [{
+        data: $scope.data12,
+        label: "Temperatura promedio",
+        color: purple,
+        lines: { show: true, fill:false, lineWidth: 2 },
+        points: { show: false, radius: 5, fillColor: '#fff' },
+        shadowSize: 0
+    }, {
+        data: $scope.data13,
+        label: 'Mas eficiente',
+        color: green,
+        lines: { show: true, fill:false, lineWidth: 2, fillColor: '' },
+        points: { show: false, radius: 3, fillColor: '#fff' },
+        shadowSize: 0
+    }];
+
+    this.interactiveChartOptions = interactiveChartOptions;
+    this.interactiveChartData = interactiveChartData;
+    var previousPoint = null;
+
+    var interactiveChartOptions2 = {
+        xaxis: {  tickColor: '#ddd',tickSize: 1 },
+        yaxis: {  tickColor: '#ddd', tickSize: 20 },
+        grid: {  hoverable: true,  clickable: true, tickColor: "#ccc", borderWidth: 1, borderColor: '#ddd' },
+        legend: { labelBoxBorderColor: '#ddd', margin: 0, noColumns: 1, show: true }
+    };
+
+    var interactiveChartData2 = [{
+        data: $scope.data14,
+        label: "Caldera 1",
+        color: purple,
+        lines: { show: true, fill:false, lineWidth: 2 },
+        points: { show: false, radius: 5, fillColor: '#fff' },
+        shadowSize: 0
+    }, {
+        data: $scope.data15,
+        label: 'Caldera 2',
+        color: green,
+        lines: { show: true, fill:false, lineWidth: 2, fillColor: '' },
+        points: { show: false, radius: 3, fillColor: '#fff' },
+        shadowSize: 0
+    }];
+
+    this.interactiveChartOptions2 = interactiveChartOptions2;
+    this.interactiveChartData2 = interactiveChartData2;
+    var previousPoint = null;
+
+    $("#interactive-chart").bind("plothover", function (event, pos, item) {
+        $("#x").text(pos.x.toFixed(2));
+        $("#y").text(pos.y.toFixed(2));
+        if (item) {
+            if (previousPoint !== item.dataIndex) {
+                previousPoint = item.dataIndex;
+                $("#tooltip").remove();
+                var y = item.datapoint[1].toFixed(2);
+                var content = item.series.label + " " + y;
+                $('<div id="tooltip" class="flot-tooltip">' + content + '</div>').css({ top: item.pageY - 45, left: item.pageX - 55 }).appendTo("body").fadeIn(200);
+            }
+        } else {
+            $("#tooltip").remove();
+            previousPoint = null;
+        }
+        event.preventDefault();
+    });$("#interactive-chart2").bind("plothover", function (event, pos, item) {
+        $("#x").text(pos.x.toFixed(2));
+        $("#y").text(pos.y.toFixed(2));
+        if (item) {
+            if (previousPoint !== item.dataIndex) {
+                previousPoint = item.dataIndex;
+                $("#tooltip").remove();
+                var y = item.datapoint[1].toFixed(2);
+                var content = item.series.label + " " + y;
+                $('<div id="tooltip" class="flot-tooltip">' + content + '</div>').css({ top: item.pageY - 45, left: item.pageX - 55 }).appendTo("body").fadeIn(200);
+            }
+        } else {
+            $("#tooltip").remove();
+            previousPoint = null;
+        }
+        event.preventDefault();
+    });
+
+
 
 
 });
+
+
 
 colorAdminApp.controller('estfEditarCtrl', function($scope,$http,$rootScope, $location) {
     $scope.id = $scope.user = $location.url();

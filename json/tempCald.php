@@ -8,7 +8,7 @@ $password = 'Eric0293';
 $dbh = new PDO("mysql:host=$hostname;dbname=$db_name", $username, $password);
 
 // a query get all the records from the users table
-$sql = "SELECT sum(gses_co2) as 'consum', month(gses_fecha) as 'mes' FROM SECCE.gases where year(gses_fecha)= 2016 group by month(gses_fecha) ;";
+$sql = "SELECT tmpr_caldera_1  as 'temp' FROM SECCE.temperatura where estf_id = 1;";
 
 // use prepared statements, even if not strictly required is good practice
 $stmt = $dbh->prepare( $sql );
@@ -24,5 +24,4 @@ $json = json_encode( $result );
 // echo the json string
 echo $json;
 ?>
-
 
