@@ -185,7 +185,9 @@ colorAdminApp.controller('themePanelController', function($scope, $rootScope, $s
     App.initThemePanel();
 });
 
-
+/* -------------------------------
+ 8.0 CONTROLLER - index Controller
+ ------------------------------- */
 
 colorAdminApp.controller('indexController', function($scope, $http, $location,$rootScope, $state) {
     var blackTransparent = 'rgba(0,0,0,0.6)';
@@ -485,7 +487,9 @@ colorAdminApp.controller('indexController', function($scope, $http, $location,$r
 
 
 });
-
+/* -------------------------------
+ 8.0 CONTROLLER - Tendencia Controller
+ ------------------------------- */
 colorAdminApp.controller('tndaCtrl', function($scope, $http, $location,$rootScope, $state) {
     $scope.data12 = [];
     $scope.data13 = [];
@@ -768,7 +772,9 @@ colorAdminApp.controller('tndaCtrl', function($scope, $http, $location,$rootScop
 
 });
 
-
+/* -------------------------------
+ 9.0 CONTROLLER - Estufa Editar Controller
+ ------------------------------- */
 
 colorAdminApp.controller('estfEditarCtrl', function($scope,$http,$rootScope, $location) {
     $scope.id = $scope.user = $location.url();
@@ -816,7 +822,9 @@ colorAdminApp.controller('estfNuevaCtrl', function($scope,$http,$rootScope, $loc
     };
 });
 
-
+/* -------------------------------
+ 10.0 CONTROLLER - Usuario General Controller
+ ------------------------------- */
 colorAdminApp.controller('usroGeneralCtrl', function($scope,$http,$rootScope, $state) {
 
     if ($('#data-table').length !== 0) {
@@ -830,6 +838,9 @@ colorAdminApp.controller('usroGeneralCtrl', function($scope,$http,$rootScope, $s
             $scope.usuarios = data7;
         });
 });
+/* -------------------------------
+ 11.0 CONTROLLER - Estufa General Controller
+ ------------------------------- */
 colorAdminApp.controller('estfGeneralCtrl', function($scope,$http,$rootScope, $state,$location) {
     var estf = [];
     var table = $('#data-table').DataTable({
@@ -872,6 +883,88 @@ colorAdminApp.controller('estfGeneralCtrl', function($scope,$http,$rootScope, $s
 
 });
 
+colorAdminApp.controller('tmprGeneralCtrl', function($scope,$http,$rootScope, $state,$location) {
+    var estf = [];
+    var table = $('#data-table').DataTable({
+        responsive: true,
+        data : $scope.data21
+    });
+    $scope.data21 = [];
+    $scope.user = $location.url();
+    $scope.user= $scope.user.split('/',2);
+    $http.post('json/usroAll.php',{nombre : $scope.user[1]}).
+        success(function(data) {
+            $scope.usuarios = data;
+            table.destroy();
+            table = $('#data-table').DataTable({
+                responsive: true,
+                data : $scope.data21
+            });
+        });
+    for(i=0;$scope.data21==[] || i < 3 ;i++) {
+        $http.post('json/tmprGeneral.php').
+            success(function (data20) {
+                estf = data20;
+                for (j = 0; j<20 ; j++) {
+                    $scope.data21[j] = [];
+                    $scope.data21[j].push(estf[j].tmpr_id);
+                    $scope.data21[j].push(estf[j].estf_id);
+                    $scope.data21[j].push(estf[j].tmpr_ambiente);
+                    $scope.data21[j].push(estf[j].tmpr_caldera_1);
+                    $scope.data21[j].push(estf[j].tmpr_caldera_2);
+                    $scope.data21[j].push(estf[j].tmpr_fecha);
+                }
+                table.destroy();
+                table = $('#data-table').DataTable({
+                    responsive: true,
+                    data : $scope.data21
+                });
+            });
+    }
+
+});
+
+colorAdminApp.controller('gsesGeneralCtrl', function($scope,$http,$rootScope, $state,$location) {
+    var estf = [];
+    var table = $('#data-table').DataTable({
+        responsive: true,
+        data : $scope.data21
+    });
+    $scope.data21 = [];
+    $scope.user = $location.url();
+    $scope.user= $scope.user.split('/',2);
+    $http.post('json/usroAll.php',{nombre : $scope.user[1]}).
+        success(function(data) {
+            $scope.usuarios = data;
+            table.destroy();
+            table = $('#data-table').DataTable({
+                responsive: true,
+                data : $scope.data21
+            });
+        });
+    for(i=0;$scope.data21==[] || i < 3 ;i++) {
+        $http.post('json/gsesGeneral.php').
+            success(function (data20) {
+                estf = data20;
+                for (j = 0; j<100 ; j++) {
+                    $scope.data21[j] = [];
+                    $scope.data21[j].push(estf[j].gses_id);
+                    $scope.data21[j].push(estf[j].estf_id);
+                    $scope.data21[j].push(estf[j].gses_co2);
+                    $scope.data21[j].push(estf[j].gses_co);
+                    $scope.data21[j].push(estf[j].gses_nox);
+                    $scope.data21[j].push(estf[j].gses_calidad);
+                    $scope.data21[j].push(estf[j].gses_fecha);
+                }
+                table.destroy();
+                table = $('#data-table').DataTable({
+                    responsive: true,
+                    data : $scope.data21
+                });
+            });
+    }
+
+});
 /* -------------------------------
  59.0 CONTROLLER - Login V2
  ------------------------------- */
