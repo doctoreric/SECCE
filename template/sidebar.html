@@ -52,6 +52,17 @@
                     <li ui-sref-active="active"><a ui-sref="user.usro.nuevo">Nuevo Usuario</a></li>
                 </ul>
             </li>
+            <li class="has-sub" ng-class="{active:$state.includes('user.cmbs')}">
+                <a href="javascript:;">
+                    <b class="caret pull-right"></b>
+                    <i class="fa fa-money"></i>
+                    <span>Combustible</span>
+                </a>
+                <ul class="sub-menu">
+                    <li ui-sref-active="active"><a ui-sref="user.cmbs.general">General</a></li>
+                    <li ui-sref-active="active"><a ui-sref="user.cmbs.nuevo">Nuevo Gasto</a></li>
+                </ul>
+            </li>
             <li class="has-sub" ng-class="{active:$state.includes('user.tnda')}">
                 <a href="javascript:;">
                     <b class="caret pull-right"></b>

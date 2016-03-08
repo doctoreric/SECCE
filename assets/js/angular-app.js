@@ -203,6 +203,47 @@ colorAdminApp.config(['$stateProvider', '$urlRouterProvider', function($statePro
                 }]
             }
         })
+        // CLase Combustible
+        .state('user.cmbs', {
+            url: '/cmbs',
+            template: '<div ui-view></div>',
+            abstract: true
+        })
+        .state('user.cmbs.general', {
+            url: '/general',
+            data: { pageTitle: 'Combustible General' },
+            templateUrl: 'views/cmbsGeneral.html',
+            resolve: {
+                service: ['$ocLazyLoad', function($ocLazyLoad) {
+                    return $ocLazyLoad.load({
+                        serie: true,
+                        files: [
+                            'assets/plugins/DataTables/media/css/dataTables.bootstrap.min.css',
+                            'assets/plugins/DataTables/extensions/Responsive/css/responsive.bootstrap.min.css',
+                            'assets/plugins/DataTables/media/js/jquery.dataTables.js',
+                            'assets/plugins/DataTables/media/js/dataTables.bootstrap.min.js',
+                            'assets/plugins/DataTables/extensions/Responsive/js/dataTables.responsive.min.js'
+                        ]
+                    });
+                }]
+            }
+        })
+        .state('user.cmbs.nuevo', {
+            url: '/nuevo',
+            data: { pageTitle: 'Carga de Combustible' },
+            templateUrl: 'views/cmbsNuevo.html',
+            resolve: {
+                service: ['$ocLazyLoad', function($ocLazyLoad) {
+                    return $ocLazyLoad.load({
+                        serie: true,
+                        files: [
+                            'assets/plugins/parsley/dist/parsley.js',
+                            'assets/plugins/bootstrap-wizard/js/bwizard.js',
+                        ]
+                    });
+                }]
+            }
+        })
         // Clase Humedad
         .state('user.hmda', {
             url: '/hmda',
