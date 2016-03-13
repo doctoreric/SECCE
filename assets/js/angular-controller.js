@@ -240,7 +240,10 @@ colorAdminApp.controller('indexController', function($scope, $http, $location,$r
         success(function(data7) {
             $scope.gasessum = data7;
         });
-
+    $http.post('json/gsesPromedio.php').
+        success(function(data90) {
+            $scope.gases = data90;
+        });
     $scope.data11 = [];
     $http.post('json/gsesNox.php').
         success(function(data8) {
