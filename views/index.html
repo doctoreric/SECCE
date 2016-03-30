@@ -111,7 +111,7 @@
         <!-- se coloca tabla-->
         <div class="col-md-6">
             <!-- begin panel -->
-            <div class="panel panel-inverse" data-sortable-id="table-basic-1">
+            <div class="panel panel-inverse bg-aqua-lighter" data-sortable-id="table-basic-1">
                 <div class="panel-heading">
                     <div class="panel-heading-btn">
                         <a href="javascript:;" class="btn btn-xs btn-icon btn-circle btn-default" data-click="panel-expand"><i class="fa fa-expand"></i></a>
@@ -122,7 +122,8 @@
                     <h4 class="panel-title">Tabla Calidad del Aire</h4>
                 </div>
                 <div class="panel-body">
-                    <p>CO2 PPM : 0-50 <span class="label label-success">Success</span> 50-100 <span class="label label-warning">Moderate</span> 100-200 <span class="label label-danger">Danger</span></p>
+                    <p>CO2 PPM : 0-50<p>
+                    <p><span class="label label-success">Success</span> 50-100 <span class="label label-warning">Moderate</span> 100-200 <span class="label label-danger">Danger</span></p>
                     <table class="table">
                         <thead>
                         <tr>
@@ -140,6 +141,95 @@
 
                         </tbody>
                     </table>
+                </div>
+            </div>
+        </div>
+        <div class="col-md-6">
+            <div class="panel panel-inverse bg-aqua-lighter" data-sortable-id="flot-chart-5">
+                <div class="panel-heading">
+                    <div class="panel-heading-btn">
+                        <a href="javascript:;" class="btn btn-xs btn-icon btn-circle btn-default" data-click="panel-expand"><i class="fa fa-expand"></i></a>
+                        <a href="javascript:;" class="btn btn-xs btn-icon btn-circle btn-success" data-click="panel-reload"><i class="fa fa-repeat"></i></a>
+                        <a href="javascript:;" class="btn btn-xs btn-icon btn-circle btn-warning" data-click="panel-collapse"><i class="fa fa-minus"></i></a>
+                        <a href="javascript:;" class="btn btn-xs btn-icon btn-circle btn-danger" data-click="panel-remove"><i class="fa fa-times"></i></a>
+                    </div>
+                    <h4 class="panel-title">Uso de Combustibles</h4>
+                </div>
+                <div class="panel-body">
+                    <p>
+                        Datos tomados en base a todas las estufas registradas
+                    </p>
+                    <div>
+                        <canvas chart="Pie" options="chartJs.chartOptions" data="chartJs.pieChartData"></canvas>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="col-md-6">
+            <div class="panel panel-danger" data-sortable-id="ui-widget-16">
+                <div class="panel-heading">
+                    <div class="panel-heading-btn">
+                        <a href="javascript:;" class="btn btn-xs btn-icon btn-circle btn-default" data-click="panel-expand"><i class="fa fa-expand"></i></a>
+                        <a href="javascript:;" class="btn btn-xs btn-icon btn-circle btn-success" data-click="panel-reload"><i class="fa fa-repeat"></i></a>
+                        <a href="javascript:;" class="btn btn-xs btn-icon btn-circle btn-warning" data-click="panel-collapse"><i class="fa fa-minus"></i></a>
+                        <a href="javascript:;" class="btn btn-xs btn-icon btn-circle btn-danger" data-click="panel-remove"><i class="fa fa-times"></i></a>
+                    </div>
+                    <h4 class="panel-title">Panel de Errores</h4>
+                </div>
+                <div class="panel-body bg-red text-white">
+                    <p>[INFO][Marzo 23, 19:09:01] Actualmente existen 3 estufas con Error en funcionamiento</p>
+                    <p>[ERROR][Marzo 22, 12:12:11] Error en la Estufa 11 por desconexion sensor de humedad</p>
+                    <p>[ERROR][Marzo 22, 09:01:03] Falla en el envio de datos de la Estufa 1</p>
+
+                </div>
+            </div>
+            <div class="panel panel-info" data-sortable-id="ui-widget-16">
+                <div class="panel-heading">
+                    <div class="panel-heading-btn">
+                        <a href="javascript:;" class="btn btn-xs btn-icon btn-circle btn-default" data-click="panel-expand"><i class="fa fa-expand"></i></a>
+                        <a href="javascript:;" class="btn btn-xs btn-icon btn-circle btn-success" data-click="panel-reload"><i class="fa fa-repeat"></i></a>
+                        <a href="javascript:;" class="btn btn-xs btn-icon btn-circle btn-warning" data-click="panel-collapse"><i class="fa fa-minus"></i></a>
+                        <a href="javascript:;" class="btn btn-xs btn-icon btn-circle btn-danger" data-click="panel-remove"><i class="fa fa-times"></i></a>
+                    </div>
+                    <h4 class="panel-title">Informacion de Ultima Hora</h4>
+                </div>
+                <div class="panel-body bg-aqua text-white">
+                    <p>[Marzo 29, 19:59:59] Ultima estufa creada es la Nº199 el dia 12 de diciembre del 2015</p>
+                    <p>[Marzo 29, 19:12:08] El usuario Admin es el usuario con mayor ingreso al Sistema</p>
+                </div>
+            </div>
+        </div>
+        <div class="col-md-6">
+            <!-- begin panel -->
+            <div class="panel panel-warning" data-sortable-id="ui-widget-16">
+                <div class="panel-heading">
+                    <div class="panel-heading-btn">
+                        <a href="javascript:;" class="btn btn-xs btn-icon btn-circle btn-default" data-click="panel-expand"><i class="fa fa-expand"></i></a>
+                        <a href="javascript:;" class="btn btn-xs btn-icon btn-circle btn-success" data-click="panel-reload"><i class="fa fa-repeat"></i></a>
+                        <a href="javascript:;" class="btn btn-xs btn-icon btn-circle btn-warning" data-click="panel-collapse"><i class="fa fa-minus"></i></a>
+                        <a href="javascript:;" class="btn btn-xs btn-icon btn-circle btn-danger" data-click="panel-remove"><i class="fa fa-times"></i></a>
+                    </div>
+                    <h4 class="panel-title">Mantenciones</h4>
+                </div>
+                <div class="panel-body bg-orange text-white">
+                    <p>[Alerta][Marzo 28, 12:00:01] Mantencion Programada Automaticamente para la estufa 5</p>
+                    <p>[INFO][Marzo 28,11:09:12] Mantencion Estufa 4 Finalizada</p>
+                    <p>[INFO][Marzo,27, 00:00:01] No Existen mantenciones Programadas</p>
+                </div>
+            </div>
+            <div class="panel panel-success" data-sortable-id="ui-widget-16">
+                <div class="panel-heading">
+                    <div class="panel-heading-btn">
+                        <a href="javascript:;" class="btn btn-xs btn-icon btn-circle btn-default" data-click="panel-expand"><i class="fa fa-expand"></i></a>
+                        <a href="javascript:;" class="btn btn-xs btn-icon btn-circle btn-success" data-click="panel-reload"><i class="fa fa-repeat"></i></a>
+                        <a href="javascript:;" class="btn btn-xs btn-icon btn-circle btn-warning" data-click="panel-collapse"><i class="fa fa-minus"></i></a>
+                        <a href="javascript:;" class="btn btn-xs btn-icon btn-circle btn-danger" data-click="panel-remove"><i class="fa fa-times"></i></a>
+                    </div>
+                    <h4 class="panel-title">Emisiones Contaminantes</h4>
+                </div>
+                <div class="panel-body bg-green text-white">
+                    <p>[INFO][Marzo 29,00:00:01] FIN Cuenta de emisiones = 9823gr de CO2</p>
+                    <p>[SUGERENCIA][Marzo 29,23:59:57] Revisar habitacion de la estufa 3 por fugas calor</p>
                 </div>
             </div>
         </div>

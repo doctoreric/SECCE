@@ -353,14 +353,14 @@ colorAdminApp.controller('indexController', function($scope, $http, $location,$r
 
     /* ChartJS Doughnut Chart
      ------------------------- */
-    var doughnutChartData = [
-        { value: 300, color: fillGrey, highlight: highlightFillGrey, label: 'Grey' },
-        { value: 50, color: fillGreen, highlight: highlightFillGreen, label: 'Green' },
-        { value: 100, color: fillBlue, highlight: highlightFillBlue, label: 'Blue' },
-        { value: 40, color: fillPurple, highlight: highlightFillPurple, label: 'Purple' },
-        { value: 120, color: fillBlack, highlight: highlightFillBlack, label: 'Black' }
+    var pieChartData = [
+        { value: 300, color: fillGrey, highlight: highlightFillGrey, label: 'Lenga' },
+        { value: 50, color: fillGreen, highlight: highlightFillGreen, label: 'Pino' },
+        { value: 100, color: fillBlue, highlight: highlightFillBlue, label: 'Eucaliptus' },
+        { value: 40, color: fillPurple, highlight: highlightFillPurple, label: 'Roble' },
+        { value: 120, color: fillBlack, highlight: highlightFillBlack, label: 'Otras maderas' }
     ];
-    this.doughnutChartData = doughnutChartData;
+
 
 
     /* ChartJS Line Chart
@@ -392,13 +392,7 @@ colorAdminApp.controller('indexController', function($scope, $http, $location,$r
 
     /* ChartJS Pie Chart
      ------------------------- */
-    var pieChartData = [
-        { value: 300, color: strokePurple, highlight: highlightStrokePurple, label: 'Purple' },
-        { value: 50, color: strokeBlue, highlight: highlightStrokeBlue, label: 'Blue' },
-        { value: 100, color: strokeGreen, highlight: highlightStrokeGreen, label: 'Green' },
-        { value: 40, color: strokeGrey, highlight: highlightStrokeGrey, label: 'Grey' },
-        { value: 120, color: strokeBlack, highlight: highlightStrokeBlack, label: 'Black' }
-    ];
+
     this.pieChartData = pieChartData;
 
 
@@ -618,13 +612,14 @@ colorAdminApp.controller('tndaCtrl', function($scope, $http, $location,$rootScop
     /* Bar Chart
      ------------------------- */
     var barChartData = [{
-        data: [ ["January", 10], ["February", 8], ["March", 4], ["April", 13], ["May", 17], ["June", 9] ],
+        data: [ ["Enero", 30], ["Febrero", 29], ["Marzo", 39], ["Abril", 42], ["Mayo", 51], ["Junio", 79] ,["Julio",88],["Agosto",58],
+        ["Sept",66],["Octubre",44],["Novi",40],["Dicienbre",45]],
         color: purple
     }];
     var barChartOptions = {
         series: {
             bars: {
-                show: true, barWidth: 0.4, align: 'center', fill: true, fillColor: purple, zero: true
+                show: true, barWidth: 0.5, align: 'center', fill: true, fillColor: purple, zero: true
             }
         },
         xaxis: { mode: "categories", tickColor: '#ddd', tickLength: 0 },
@@ -633,7 +628,22 @@ colorAdminApp.controller('tndaCtrl', function($scope, $http, $location,$rootScop
     this.barChartData = barChartData;
     this.barChartOptions = barChartOptions;
 
-
+    var barChartData2 = [{
+        data: [ ["Enero", 70], ["Febrero", 60], ["Marzo", 45], ["Abril", 38], ["Mayo", 31], ["Junio", 29] ,["Julio",18],["Agosto",20],
+            ["Sept",46],["Octubre",54],["Novi",56],["Dicienbre",65]],
+        color: purple
+    }];
+    var barChartOptions2 = {
+        series: {
+            bars: {
+                show: true, barWidth: 0.5, align: 'center', fill: true, fillColor: purple, zero: true
+            }
+        },
+        xaxis: { mode: "categories", tickColor: '#ddd', tickLength: 0 },
+        grid: { borderWidth: 0 }
+    };
+    this.barChartData2 = barChartData2;
+    this.barChartOptions2 = barChartOptions2;
     /* Pie Chart
      ------------------------- */
     var pieChartData = [];
@@ -669,10 +679,10 @@ colorAdminApp.controller('tndaCtrl', function($scope, $http, $location,$rootScop
         grid:{ borderWidth:0, hoverable: true, clickable: true },
         legend: { show: false }
     };
-    var colorArray = [dark, green, purple];
-    var nameArray = ['Unique Visitor', 'Bounce Rate', 'Total Page Views', 'Avg Time On Site'];
-    var dataArray = [20,14,12,31];
-    for( var i = 0; i<3; i++) {
+    var colorArray = [dark, green, purple,orange];
+    var nameArray = ['Lenga', 'Pino', 'Roble', 'Eucaliptus'];
+    var dataArray = [40,14,10,21];
+    for( var i = 0; i<4; i++) {
         donutChartData[i] = { label: nameArray[i], data: dataArray[i], color: colorArray[i] };
     }
 

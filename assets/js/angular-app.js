@@ -334,6 +334,29 @@ colorAdminApp.config(['$stateProvider', '$urlRouterProvider', function($statePro
                 }]
             }
         })
+        .state('user.tnda.predictivo', {
+            url: '/predictivo',
+            data: { pageTitle: 'Modelos Predictivos' },
+            templateUrl: 'views/tndaPredictivo.html',
+            resolve: {
+                service: ['$ocLazyLoad', function($ocLazyLoad) {
+                    return $ocLazyLoad.load({
+                        serie: true,
+                        name : 'angular-flot',
+                        files: [
+                            'assets/plugins/flot/jquery.flot.min.js',
+                            'assets/plugins/flot/jquery.flot.time.min.js',
+                            'assets/plugins/flot/jquery.flot.resize.min.js',
+                            'assets/plugins/flot/jquery.flot.pie.min.js',
+                            'assets/plugins/flot/jquery.flot.stack.min.js',
+                            'assets/plugins/flot/jquery.flot.crosshair.min.js',
+                            'assets/plugins/flot/jquery.flot.categories.js',
+                            'assets/plugins/flot/angular-flot.js',
+                        ]
+                    });
+                }]
+            }
+        })
 
 }]);
 

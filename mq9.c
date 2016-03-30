@@ -38,11 +38,15 @@ void setup() {
   Ethernet.begin(mac, ip); // Inicializamos el Ethernet Shield
   delay(1000); // Esperamos 1 segundo de cortesia
   dht.begin();
+  analogWrite(A2,255);
+  analogWrite(A3,0);
 }
 
 void loop() {
   // ESPERA ENTRE CAPTURAS
   delay(5000);
+  analogWrite(A2,0);
+  analogWrite(A3,255);
   float h = dht.readHumidity();
   float t = dht.readTemperature();
   if (isnan(h) || isnan(t)) {
@@ -84,7 +88,7 @@ void loop() {
     client.print("GET /angu/json/tmprUp.php?estf=1&ambiente=");
     client.print(t);
     client.print("&caldera1=");
-    client.print(c);
+    client.print(c2);
     client.print("&caldera2=");
     client.print(c2); // Enviamos los datos por GET
     client.println(" HTTP/1.0");
@@ -99,7 +103,9 @@ void loop() {
   }
   client.stop();
   client.flush();
-  delay(1000);
+  analogWrite(A2,255);
+  analogWrite(A3,0);
+  delay(2000);
   //FIN DE SUBIDA A MYSQL TABLA TEMPERATURA
   //INICIO SUBIDA A MYSQL SERVER TABLA HUMEDAD
   Serial.println("Conectando...");
@@ -118,6 +124,9 @@ void loop() {
   }
   client.stop();
   client.flush();
+  analogWrite(A2,0);
+  analogWrite(A3,255);
+  delay(2000);
   // FIN DE SUBIDA A MYSQL SERVER TABLA HUMEDAD
   //captura datos gases
   float sensor_volt;
@@ -141,6 +150,9 @@ void loop() {
   Serial.println(RS_gas);
   Serial.print("CO = ");//gases co
   Serial.println(ratio);
+  analogWrite(A2,255);
+  analogWrite(A3,0);
+  delay(2000);
   delay(5000); // Espero un minuto
   //FIN CAPTURA DE GASES
   //INICIO SUBIDA MYSQL SERVER TABLA GASES
